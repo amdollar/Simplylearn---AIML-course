@@ -1,0 +1,2 @@
+Init if data
+ This is new line and looks good.
