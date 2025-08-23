@@ -19,12 +19,9 @@ print(npls.ndim)
 print(npls.max())
 
 # To check the shape of the array: shape(), total 
-
 print(npls.shape)
 
 #Creation of a 2D array
-
-
 print(twoDArray.shape)
 print(twoDArray)
 print(twoDArray.ndim)
@@ -226,7 +223,7 @@ random_2_last_row = random.randint(90, 100, size = 2)
 print(f'2 random values b/w 90 to 100 : {random_2_last_row}')
 
 # Guess the number game: User will enter any number b/w 1 to 10 and if that is returned then win else loss
-'''
+
 
 
 while True:
@@ -241,3 +238,38 @@ if random.randint(1,10) == guess:
     print('Yay! You won the game.')
 else:
     print('Better luck next time.')
+
+# Get the identity matrix using numpy:
+
+# iden_mat = np.eye(4) # float mat of 4X4
+# print(iden_mat)
+
+# iden_int= np.eye(4,dtype=int) # Int mat of 4X4
+# print(iden_int)
+
+'''
+# Generate a 1-D array containing 5 random integers from 0 to 100:
+# print(random.randint(0, 100, size = 5))
+
+# Generate a 2-D array with 3 rows, each row containing 5 random integers from 0 to 100:
+
+# print(random.randint(0, 100, size = (3,5)))
+
+# Generate random number from given array:
+# choice(): gives you option to generate a random number from the Array.
+
+given_arr = [1,53,12,34,21]
+rand_from_arr = random.choice(given_arr)
+# print(rand_from_arr)
+
+# this method also allows us to return an array of values
+rand_arr_from_arr = random.choice(given_arr, size=(2,4))
+# print(rand_arr_from_arr)
+
+# ---------------Random Distribution
+# We can generate numbers based on defined probability using choice()
+# We can provide the list of numbers we want to see and their probability.
+
+print(random.choice([1,12,34,21,53], p=[0.2,0.3,0.4,0,0.1], size=30))
+
+# More: https://www.w3schools.com/python/numpy/
