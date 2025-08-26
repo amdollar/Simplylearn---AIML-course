@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 
-'''
 
 # A series in Pandas is nothing but like column in a Table. 
 # 
@@ -102,29 +101,28 @@ print(outside_d.tail())
 
 #--------------------------- Operations in Pandas:-----------------
  
-'''
 
 emp_header = pd.read_csv('employeeWithHeaders.csv')
-# print(emp_header.info())
+print(emp_header.info())
 
 # printing headers of file:
-# print(emp_header.columns)
+print(emp_header.columns)
 
 # convering the Data Frame to a NumPy Array --- values
 
 empVals = emp_header.values
-# print(empVals)
+print(empVals)
 
 # Convert Numpy Array to a Data Frame: 
 # arra = np.arange(10,30)
-# print(arra)
+print(arra)
 
 # df = pd.DataFrame(arra)
-# print(df)
+print(df)
 
 
 emp_df = pd.DataFrame(empVals, columns= ['Seq', 'Name', 'Sal'])
-# print(emp_df)
+print(emp_df)
 
 # Get values of specific columns:
 
@@ -133,7 +131,97 @@ print(emp_df['Sal'])
 #Goal: Create a new column named yearlySalary
 #      Derive the values of yearlySalary from salary column
 
-print(emp_df)
+print(f'Employee table before Y sal column: \n {emp_df}')
 emp_df['Yearly Salary'] = emp_df['Sal'] * 12
 
-print(emp_df)
+print(f'Employee table after Y sal column : \n {emp_df}')
+
+#Create a function that can accept salary and return the bonus of the salary
+# salary less than or equal to 1500 -----> 10% bonus
+# salary between 1501 and 6000 ----------> 5% bonus
+# salary between 6001 and 9900 ----------> 2.5% bonus
+# salary greater than 9900 --------------> 0 (no bonus)
+
+#Pandas also allows you to broadcast function logic
+#
+# To broadcast a function in pandas, you will use apply() method
+
+def bonus_cals(salary):
+  if salary <= 1500:
+    return round(salary * 0.10,3)
+  elif salary > 1500 and salary <= 6000:
+    return round(salary * 0.05,3)
+  elif salary > 6000 and salary <= 9900:
+    return round(salary * 0.025,3)
+  else:
+    return 0
+
+emp_df['bonus'] = emp_df['Sal'].apply(bonus_cals)
+print(f'Each employee salary after applying bonus: \n{emp_df}')
+
+# turn all the names in the enam col to upper case
+
+emp_df['Name'] = emp_df['Name'].apply(str.upper)
+
+print(f' Each employee name after turning their upper :\n {emp_df}')
+
+# Adding new column name department:
+
+emp_df['Department'] = pd.Series(['IT', 'HR', 'Ops', 'RIS', 'Life', 'Bank'])
+print(f'Table structure after adding new column department: \n {emp_df}')
+
+# --------------------------------------------------Data traversal ---- Access the data
+#
+# Accessing data using Index location ------ iloc
+#
+# 1. iloc[ rowIndex,colIndex ]
+# 2. iloc[ rowRange,colRange ]
+# 3. iloc[ rowIndexList, colIndexList ]
+
+
+
+employee_with_header = pd.read_csv('employeeWithHeaders.csv')
+print(employee_with_header)
+
+print(employee_with_header.iloc[ [0,1] , [0,1,2]])
+#    eid     ename  esal
+# 0    1  Prashant  1000
+# 1    2      Amar  2000
+
+# read data in range:
+
+print(employee_with_header.iloc[ 0:6 , 0:3])   
+
+#Goal: Extract those records whose monthly salary is greater than 5000
+
+sal_condition = employee_with_header[employee_with_header['esal'] > 5000]
+print(f'List of employees where salary is > 5000: \n {sal_condition}')
+
+# Adding new column name department:
+
+employee_with_header['Department'] = pd.Series(['IT', 'HR', 'RIS', 'RIS', 'Life', 'RIS'])
+print(employee_with_header)
+
+#Goal: Extract those records who belong to RIS Department
+
+ris_employees = employee_with_header[employee_with_header['Department']== 'RIS']
+print(ris_employees)
+
+#Goal: Extract those records who belong to RIS dept and has monthly salary greater than 3000
+ris_rich_emp = employee_with_header[(employee_with_header['Department']== 'RIS') & (employee_with_header['esal'] > 3000)]
+print(ris_rich_emp)
+
+# Extract the eid and ename only of these rich ris employees:
+
+ris_rich_ename_eid = employee_with_header[(employee_with_header['Department']== 'RIS') & (employee_with_header['esal'] > 3000)].iloc[:, [0,1]]
+print(ris_rich_ename_eid)
+
+# Extarct the employees who are in RIS and HR
+
+ris_hr_emp= employee_with_header[employee_with_header['Department'].isin(['RIS','HR'])]
+print(ris_hr_emp)
+
+# Print the name of employee whos salary is maximum in the table:
+
+max_sal_name = employee_with_header[employee_with_header['esal'] == employee_with_header['esal'].max()]['ename']
+print(max_sal_name)
