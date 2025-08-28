@@ -114,10 +114,10 @@ empVals = emp_header.values
 print(empVals)
 
 # Convert Numpy Array to a Data Frame: 
-# arra = np.arange(10,30)
+arra = np.arange(10,30)
 print(arra)
 
-# df = pd.DataFrame(arra)
+df = pd.DataFrame(arra)
 print(df)
 
 
@@ -225,3 +225,7 @@ print(ris_hr_emp)
 
 max_sal_name = employee_with_header[employee_with_header['esal'] == employee_with_header['esal'].max()]['ename']
 print(max_sal_name)
+
+salaries = pd.DataFrame([[1000],[2000],[3000],[4000],[5000],[6000],[7000],[8000],[9000],[2000000],[100000000]] , columns=['salary'])
+print(f'Data frame: \n {salaries}')
+print(salaries['salary'].mean)
