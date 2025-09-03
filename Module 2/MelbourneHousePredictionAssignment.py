@@ -35,6 +35,8 @@ print(small_data['Landsize'].isna().sum())
 # To handle the discrete data: replace missing values with Median values.
 small_data['YearBuilt'].fillna(small_data['YearBuilt'].median(), inplace=True)
 small_data['YearBuilt'] = small_data['YearBuilt'].astype(int)
+
+# We are already doing Domain and statical handeling below
 small_data['Car'].fillna(small_data['Car'].median(), inplace=True)
 small_data['Car'] = small_data['Car'].astype(int)
 print(small_data['Car'].unique())
@@ -64,6 +66,7 @@ print(domain_data.head())
 domain_data['YearBuilt'].fillna(2000, inplace=True)
 domain_data['YearBuilt'] = domain_data['YearBuilt'].astype(int)
 print(domain_data['YearBuilt'].unique())
+print(domain_data.head())
 
 
 
