@@ -68,6 +68,9 @@ domain_data['YearBuilt'] = domain_data['YearBuilt'].astype(int)
 print(domain_data['YearBuilt'].unique())
 print(domain_data.head())
 
+print(small_data.describe())
+print(domain_data.describe())
+
 
 
 # Handle the null/NAN values in the columns.
