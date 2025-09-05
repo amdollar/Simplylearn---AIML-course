@@ -71,7 +71,7 @@ print(data)
 print(data.describe(include='all'))
 
 # Customer_ID     Age  Gender     City  Annual_Income Education_Level  Purchase_Frequency Subscription_Status  Credit_Score  Product_Category  Subscription_Encoded
-# 50  45.000000   50     50      50.000000              50               50.000000                  50         45.000000               50             50.000000
+# 50            45.000000   50     50      50.000000              50               50.000000                  50         45.000000               50             50.000000
 
 # 9. Fill the missing values in 'Age' column using median
 print(data['Age'].isna().sum())
@@ -91,8 +91,16 @@ print(data['Credit_Score'].isna().sum()) #0
 
 # 12. Define an appropriate mapping for the Education_Level column and transform it into Numerical values.
 # i. Check the unique values :
-print(data['Education_Level'].unique()) #["Master's" "Bachelor's" 'PhD' 'High School']
-data['Education_Level'].replace(['High School','Bachelor\'s', 'Master\'s', 'PhD'], [1,2,3,4], inplace=True)
+print(data['Education_Level'].unique()) #["Master's" "Bachelor's" 'PhD' 'High School']  
+mapping = {
+    'High School': 1,
+    'Bachelor\'s': 2,
+    'Master\'s': 3,
+    'PhD': 4
+}
+
+data['Education_Level_Mapped'] = data['Education_Level'].map(mapping)
+print('Ordinal data handeling: ')
 print(data['Education_Level'])
 
 # 13. Verify the transformed values are retaining the correct order (HS < B < M < P)
