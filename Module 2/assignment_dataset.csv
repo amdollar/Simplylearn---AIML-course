@@ -1,0 +1,121 @@
+CustomerID,Age,Gender,AnnualIncome,SpendingScore,PreferredCategory
+CUST0001,58,Female,78,86,Sports
+CUST0002,25,Other,76,71,Groceries
+CUST0003,19,Female,21,39,Electronics
+CUST0004,65,Male,38,85,Electronics
+CUST0005,35,Female,35,14,Sports
+CUST0006,33,Male,78,18,Home Decor
+CUST0007,32,Male,37,-34,Groceries
+CUST0008,26,Other,28,15,Groceries
+CUST0009,65,Other,104,14,Home Decor
+CUST0010,24,Other,,96,Sports
+CUST0011,61,,80,71,Sports
+CUST0012,65,Other,91,20,Electronics
+CUST0013,52,Other,144,35,Home Decor
+CUST0014,23,Female,74,37,Sports
+CUST0015,55,Other,53,78,Fashion
+CUST0016,45,Female,141,27,Groceries
+CUST0017,20,Female,82,92,Electronics
+CUST0018,19,Male,141,44,Home Decor
+CUST0019,23,Male,124,-99,Electronics
+CUST0020,31,,68,88,Sports
+CUST0021,32,Female,44,82,Sports
+CUST0022,50,Male,44,34,Fashion
+CUST0023,56,Male,130,65,Groceries
+CUST0024,19,Male,110,63,Home Decor
+CUST0025,53,Male,128,33,Electronics
+CUST0026,30,Other,125,7,Groceries
+CUST0027,63,Male,139,12,Sports
+CUST0028,59,Other,33,82,Groceries
+CUST0029,62,Female,45,55,Electronics
+CUST0030,52,Other,35,36,Groceries
+CUST0031,44,Male,,6,Sports
+CUST0032,32,Female,106,1,Groceries
+CUST0033,46,Female,47,43,Home Decor
+CUST0034,55,Other,83,99,Groceries
+CUST0035,35,Female,69,17,Home Decor
+CUST0036,18,Other,68,,Groceries
+CUST0037,28,Female,134,34,Sports
+CUST0038,62,Other,55,21,Fashion
+CUST0039,45,Male,128,95,Fashion
+CUST0040,39,Other,66,57,Home Decor
+CUST0041,35,Other,91,71,Home Decor
+CUST0042,27,Male,138,91,Fashion
+CUST0043,31,Other,,55,Sports
+CUST0044,39,Other,39,72,Sports
+CUST0045,24,Female,133,2,Groceries
+CUST0046,23,Other,45,15,Home Decor
+CUST0047,42,Female,32,10,Sports
+CUST0048,24,Male,23,89,Electronics
+CUST0049,40,Female,43,20,Groceries
+CUST0050,40,,80,70,Groceries
+CUST0051,56,Male,62,5,Fashion
+CUST0052,34,Female,124,48,Home Decor
+CUST0053,20,Male,144,75,Sports
+CUST0054,64,Other,143,71,Sports
+CUST0055,47,Other,74,19,Groceries
+CUST0056,52,Female,122,56,Home Decor
+CUST0057,25,Other,35,17,Home Decor
+CUST0058,42,Male,62,6,Home Decor
+CUST0059,23,Other,117,40,Fashion
+CUST0060,53,Male,20,47,Sports
+CUST0061,36,Other,119,6,Home Decor
+CUST0062,58,Female,87,46,Fashion
+CUST0063,57,Other,136,27,Electronics
+CUST0064,41,Other,93,88,Groceries
+CUST0065,54,Other,128,32,Sports
+CUST0066,30,Male,144,86,Sports
+CUST0067,63,Male,59,14,Groceries
+CUST0068,22,Female,68,46,Electronics
+CUST0069,20,Male,95,100,Fashion
+CUST0070,310,Other,75,72,Groceries
+CUST0071,32,Other,34,53,Fashion
+CUST0072,36,Male,35,80,Fashion
+CUST0073,23,Other,100,96,Fashion
+CUST0074,32,Female,34,20,Electronics
+CUST0075,24,Female,32,31,Electronics
+CUST0076,42,Male,142,21,Fashion
+CUST0077,35,Male,148,23,Home Decor
+CUST0078,47,Female,60,53,Sports
+CUST0079,58,Female,34,4,Electronics
+CUST0080,41,Male,150,23,Home Decor
+CUST0081,-10,,40,95,Home Decor
+CUST0082,41,male,67,43,Sports
+CUST0083,40,Other,37,53,Fashion
+CUST0084,31,Male,37,86,Home Decor
+CUST0085,60,Male,80,95,Home Decor
+CUST0086,35,Other,123,32,Home Decor
+CUST0087,62,female,50,35,Fashion
+CUST0088,61,Male,83,21,Fashion
+CUST0089,59,Other,30,90,Electronics
+CUST0090,22,Male,40,14,Electronics
+CUST0091,56,,127,49,Home Decor
+CUST0092,58,Other,100,5,Fashion
+CUST0093,28,Female,86,61,Fashion
+CUST0094,52,Other,72,29,Sports
+CUST0095,64,male,100,26,Home Decor
+CUST0096,33,Female,81,59,Electronics
+CUST0097,28,Other,87,45,Sports
+CUST0098,47,Other,121,40,Fashion
+CUST0099,42,Female,53,30,Electronics
+CUST0100,35,male,96,29,Home Decor
+CUST0101,58,Other,137,4,Fashion
+CUST0102,62,Other,100,85,Home Decor
+CUST0103,53,Other,38,25,Sports
+CUST0104,32,Male,22,52,Sports
+CUST0105,61,Other,137,43,Sports
+CUST0106,38,Female,45,36,Groceries
+CUST0107,200,Female,38,9,Home Decor
+CUST0108,32,Other,74,99,Sports
+CUST0109,20,Other,149,36,Sports
+CUST0110,38,Female,87,45,Home Decor
+CUST0111,43,Female,53,83,Sports
+CUST0112,35,Other,109,66,Home Decor
+CUST0113,22,Female,37,52,Fashion
+CUST0114,31,Male,82,87,Home Decor
+CUST0115,54,Male,114,69,
+CUST0116,63,Male,92,43,Health
+CUST0117,38,Male,60,4,Fashion
+CUST0118,31,Female,132,15,Groceries
+CUST0119,59,Male,97,34,sports
+CUST0120,107,Other,22,23,Home Decor
