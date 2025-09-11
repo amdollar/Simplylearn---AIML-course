@@ -163,9 +163,3 @@ else:
     print('H0: Both the columns are statically same, we can remove State column. ')
 
 
-
-#1. Create notes of Hypothesis 
-# 2. Normality TEstsing, usage of normality testing
-# 3. Paramatric and non parametric test cases,
-# 4. Feature elimination.
-# 5. End to end flow notes on notebook + Revision
