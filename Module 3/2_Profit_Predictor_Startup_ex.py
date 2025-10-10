@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
+import pickle
 
 # Question: Create a model that can predict the profit of the company baed on company's 
 #   Spending pattern and company's Location
@@ -81,3 +82,9 @@ if state_name in state_imputer.categories_[0]:
 else:
     print(f'State is not recognized by ai model!')
 
+
+
+# Task 2:  Export the model and use it in different file:
+
+pickle.dump(model, open('ProfitPredictor.pkl', 'wb'))
+pickle.dump(state_imputer, open('StateConvertor.obj', 'wb'))
