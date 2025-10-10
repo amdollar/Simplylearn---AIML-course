@@ -29,7 +29,7 @@ ML Algo category: Superwised learning | Classification: Binary (It is yes or no 
 
 2. Model Training: Inferential statics: 
     For this data has to be:
-    i. Complete.
+    i. Complete data.
     ii. Numerical format
 3. Here we will use new package scikitlearn: For that:
     i. Data has to be in NUMPY Array for faster processing.
@@ -52,7 +52,7 @@ print(features[:,0])
 # ['France' 'Spain' 'Germany' 'Spain' 'Germany' 'France' 'Spain' 'France' nan 'France'] Handle this nan value
 print(features)
  
-# ii. Instintiate the object of SimpleImputer
+# ii. Instintiate the object of SimpleImputer to handel NAN values
 
 simpleimputer_country = SimpleImputer(missing_values=np.nan, strategy='most_frequent')
 
@@ -80,7 +80,7 @@ print(features)
 np.round(features[:, [2]].astype(float), 2)
 print(features)
 
-# Convert data to Numerical values : Using OHE here. 
+# Convert categorical data to Numerical values : Using OHE here. 
 # This can be done using sklean's OneHotEncoder 
 
 oneHEncoderCountry = OneHotEncoder(sparse=False)
