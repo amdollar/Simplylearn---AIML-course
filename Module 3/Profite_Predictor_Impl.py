@@ -15,7 +15,7 @@ if state_name in state_imputer.categories_[0]:
     state = state_imputer.transform(np.array([[state_name]]))
     feature_value = np.concatenate((state, np.array([[r_d_spend, administration, marketing_spend]])), axis = 1)
     predicted_value = profit_predictor.predict(feature_value)
-    print(f'Predicted profit based on provided values is: {predicted_value}')
+    print(f'Predicted profit based on provided values is: {np.round(predicted_value, 2)}')
 else:
     print(f'State is not recognized by ai model!')
 
