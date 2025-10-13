@@ -8,11 +8,12 @@ from sklearn.linear_model import LogisticRegression
 data = pd.read_csv("https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv")
 
 print(data.info())
+print(data.head())
 
 
 features = data.iloc[:,[0,1,2,3]].values
 label = data.iloc[:,[4]].values
-print(features)
+# print(features)
 
 CL = 0.95
 for rs in range(1,301):
@@ -42,8 +43,19 @@ train_score = model.score(X_train, y_train)
 test_score = model.score(X_test, y_test)
 
 print(f'Test score: {test_score}, train score: {train_score}')
+# 5.1          3.5           1.4          0.2  Setosa
+# Check the model:
+sepallength = input('Enter the sepalLenght: ')
+sepalWidth = input('Enter the sepalWidth: ')
+petallength = input('Enter the petallength: ')
+petalwidth = input('Enter the petalwidth: ')
+
+inputFeature = np.array([[sepallength,sepalWidth, petallength, petalwidth]])
+
+predicted_value = model.predict(inputFeature)
+print(predicted_value)
 
 
-# Perform the export and import and testing of this one
+# Deploy the model:
 # import pickle
 # pickle.dump(model, open('Irishmodel.pkl', 'wb'))
