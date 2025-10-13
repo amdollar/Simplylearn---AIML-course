@@ -92,7 +92,7 @@ encoder = OneHotEncoder(sparse=False)
 encoder.fit_transform(feature[:,[1,3,5,16,19]])
 values = encoder.transform(feature[:,[1,3,5,16,19]])
 
-# Concat the feature values wiht the encoded values
+# Concat the feature values with the encoded values
 final_feature = np.concatenate((values, feature[:,[2,8,9,10,11,12,13,14,15,17,18,20]]), axis = 1)
 # print(final_feature)
 label = data.iloc[:,[4]].values

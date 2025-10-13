@@ -41,7 +41,14 @@ X_train, X_test, y_train, y_test = train_test_split(features, label, train_size=
 
 model= LogisticRegression()
 model.fit(X_train, y_train)
+age = input('Enter age of customer: ')
+salary = input('Enter Salary of customer: ')
 
-import pickle
+inputModel = np.array([[age, salary]])
 
-pickle.dump(model, open('CustomerPredictor.pkl', 'wb'))
+CustomerTypeValue = model.predict(inputModel)
+print(CustomerTypeValue)
+
+# import pickle
+
+# pickle.dump(model, open('CustomerPredictor.pkl', 'wb'))
