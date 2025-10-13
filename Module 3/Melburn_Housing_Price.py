@@ -52,11 +52,3 @@ for rs in range(1,101):
 #   if testScore > trainScore and testScore >= CL :
 print(f"Test Score : {testScore} TrainScore : {trainScore} for RandomState {rs}")
 
-# 2. Create a model that can predict the house of the price based on all the feature cols. 
-
-newfeatures = data.iloc[:, [1,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]].values
-newlabel = data.iloc[:, [4]].values
-#Convert the categorical data in the numeric format:
-# Better to create new file and work in that
-
-print(newfeatures)

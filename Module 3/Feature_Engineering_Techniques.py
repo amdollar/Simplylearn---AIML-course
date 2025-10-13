@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
+from sklearn.feature_selection import RFE
+from sklearn.feature_selection import SelectFromModel
+from sklearn.preprocessing import OneHotEncoder
 
 
 import statsmodels.regression.linear_model as stat
@@ -32,7 +35,7 @@ print(final_data.corr())
 
 
 # Creatae features using new cols
-'''
+
 new_features = final_data.iloc[:,[3,5]].values
 # print(new_features)
 
@@ -86,7 +89,7 @@ for rs in range(1,100):
 # 2. Backward feature elimination
 
 #1 . perform all in means create a col for the intercept and append it with the final dataset
-'''
+
 
 for_ols = final_data.iloc[:, [0,1,2,3,4,5]]
 intercept= np.ones(len(for_ols))
@@ -148,3 +151,86 @@ for rs in range(1,200):
 
   if testScore > trainScore and testScore >= CL :
     print(f"Test Score : {testScore} TrainScore : {trainScore} for RandomState {rs}")
+
+  
+
+# 3. Recursive feature elimination:
+
+# Step 1: Initialize the algo:
+modelAlgo = LinearRegression()
+
+# Step 2 : Initialize RFE
+
+selectFeature = RFE(estimator=modelAlgo)
+
+# Step 3: Fit the data into RFE
+
+oheState = OneHotEncoder(sparse=False)
+stateDummy = oheState.fit_transform(features[:,[3]])
+finalfeatureSet = np.concatenate( (stateDummy,features[:,[0,1,2]]) , axis = 1)
+
+selectFeature.fit(finalfeatureSet,labels)
+
+#Step4: Identify the feature that has highest ranking
+print(selectFeature.ranking_)
+# [1 1 1 2 3 4]
+'''
+#Guideline: Select the columns with ranking 1 and 2
+# RFE selected : California, Florida, NY, RDSpend
+'''
+feature_for_RFE = finalfeatureSet[:,[0,1,2,3]]
+
+CL = 0.99
+
+for rs in range(1,200):
+  X_train,X_test,y_train,y_test = train_test_split(feature_for_RFE,
+                                                   labels,
+                                                   test_size=0.2,
+                                                   random_state=rs
+                                                   )
+
+  model = LinearRegression()
+
+  model.fit(X_train,y_train)
+
+  trainScore = model.score(X_train,y_train)
+  testScore = model.score(X_test,y_test)
+
+  if testScore > trainScore and testScore >= CL :
+    print(f"Test Score : {testScore} TrainScore : {trainScore} for RandomState {rs}")
+
+
+# 4. Select From Model (SFM)
+# It can be applied for all ML algorithms
+#Step1: Initialize the ML algo
+modelAlgo = LinearRegression()
+
+#Step2: Initialize SFM
+selectFeature = SelectFromModel(estimator=modelAlgo)
+#Step3: Fit the data to RFE
+selectFeature.fit(finalfeatureSet, labels)
+
+#Step4: Identify the feature that has True Boolean values
+print(selectFeature.get_support())
+# [ True  True  True False False False]
+
+model_feature =  finalfeatureSet[:,[0,1,2]]
+
+CL = 0.99
+
+for rs in range(1,200):
+  X_train,X_test,y_train,y_test = train_test_split(model_feature,
+                                                   labels,
+                                                   test_size=0.2,
+                                                   random_state=rs
+                                                   )
+
+  model = LinearRegression()
+
+  model.fit(X_train,y_train)
+
+  trainScore = model.score(X_train,y_train)
+  testScore = model.score(X_test,y_test)
+
+  if testScore > trainScore and testScore >= CL :
+    print(f"Test Score : {testScore} TrainScore : {trainScore} for RandomState s{rs}")

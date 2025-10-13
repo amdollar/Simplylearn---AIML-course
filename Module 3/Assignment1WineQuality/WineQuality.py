@@ -30,34 +30,32 @@ from sklearn.linear_model import LogisticRegression
  
 CL = 0.70
 
-# for rs in range(1,7500):
-#     X_train, X_test, y_train, y_test = train_test_split(features, label, train_size=0.2, random_state=rs)
+# Tring to get the test score without any feature engineering:
+for rs in range(1,7500):
+    X_train, X_test, y_train, y_test = train_test_split(features, label, train_size=0.2, random_state=rs)
 
-#     model = LogisticRegression()
+    model = LogisticRegression()
     
-#     # Train the model
-#     model.fit(X_train, y_train)
+    # Train the model
+    model.fit(X_train, y_train)
     
-#     # Get the score
-#     train_score= model.score(X_train, y_train)
-#     test_score = model.score(X_test, y_test)
+    # Get the score
+    train_score= model.score(X_train, y_train)
+    test_score = model.score(X_test, y_test)
 
-#     if test_score > train_score and test_score>= CL:
-#         print(f' Test score: {test_score},  Train score: {train_score},Random state: {rs}')
+    if test_score > train_score and test_score>= CL:
+        print(f' Test score: {test_score},  Train score: {train_score},Random state: {rs}')
 
 
-# Since data os not coming in the fileters we need to try the feature engineeing: RFE an SFM
-
+# Since data is not coming in the filters we need to try the feature engineeing: RFE an SFM
+# Feature engineering using RFE: 
 from sklearn.feature_selection import RFE
 modelAlgo = LogisticRegression()
 feature_selection = RFE(estimator=modelAlgo)
 
 feature_selection.fit(features, label)
 print(feature_selection.ranking_)
-# 
-# [4 1 3 5 2 6 7 1 1 1 1]
-# [0,1,2,3,4,5,6,7,8,9,10]
-# 
+
 newFeature = features[:,[1, 4, 7,8,9,10]]
 print(newFeature)
 
@@ -76,7 +74,8 @@ for rs in range(1,100):
     if test_score > train_score and test_score>= CL:
         print(f' Test score: {test_score},  Train score: {train_score},Random state: {rs}')
 
-# try using: SFM:
+# try using: 
+# SFM:
 from sklearn.feature_selection import SelectFromModel
 modelAlgo = LogisticRegression()
 selectFeatures = SelectFromModel(estimator=modelAlgo)
@@ -84,9 +83,8 @@ selectFeatures = SelectFromModel(estimator=modelAlgo)
 selectFeatures.fit(features, label)
 print(selectFeatures.get_support())
 # [False  True False False False False False False  True False  True]
+
 # [0,1,2,3,4,5,6,7,8,9,10]
-
-
 
 newFeatureforSFM = features[:, [1, 8, 10]]
 for rs in range(1,1000):
