@@ -98,7 +98,14 @@ final_feature = np.concatenate((values, feature[:,[2,8,9,10,11,12,13,14,15,17,18
 label = data.iloc[:,[4]].values
 
 
-
+'''
+This divides the data into training and testing set:
+here x_train will have training dataset values from features, and y_train will have training dataset values from labels
+and x_test, y_test will have testing feature and label dataset values
+#  x_train, x_test, y_train, y_test = train_test_split(final_feature, label,
+#                                                     train_size=0.2,
+#                                                     random_state=4)
+'''
 # CL = 0.5
 # x_train, x_test, y_train, y_test = train_test_split(final_feature, label,
 #                                                     train_size=0.2,

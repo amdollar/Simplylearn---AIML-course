@@ -25,7 +25,7 @@ data['Landsize'].fillna(data['Landsize'].mean(), inplace = True)
 data['YearBuilt'].fillna(data['YearBuilt'].median(), inplace = True)
 
 
-# 2. Split into train and test data:
+# 2. Split into features and labels to train and test data:
 features = data.iloc[:, [12,13,14,15]].values
 print(features)
 

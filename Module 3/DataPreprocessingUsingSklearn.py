@@ -90,7 +90,7 @@ oneHEncoderCountry.fit_transform(features[:, [0]])
 oneHEncoderCountry = oneHEncoderCountry.transform(features[:, [0]])
 print(oneHEncoderCountry)
 
-# Now the ONEHotEncoded values are saperatly created, we need to conat these values in single dataframe:
+# Now the ONEHotEncoded values are saperatly created, we need to concat these values in single dataframe:
 
 finalFeaturesDF = np.concatenate((oneHEncoderCountry, features[:, [1,2]]), axis = 1)
 print(
