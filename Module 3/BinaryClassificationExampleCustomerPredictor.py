@@ -37,6 +37,8 @@ for rs in range(1,500):
   if testScore > trainScore and testScore >= CL:
     print(f"Test Score : {testScore} | Train Score : {trainScore} | RS : {rs} ")
 
+
+# Create final model, once random state is captured from above logic
 X_train, X_test, y_train, y_test = train_test_split(features, label, train_size=0.2, random_state=314)
 
 model= LogisticRegression()

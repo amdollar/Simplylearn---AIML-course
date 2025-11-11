@@ -29,12 +29,12 @@ print(final_data.info())
 # 1. Co relation analysis:
 
 print(final_data.corr())
-# While the feature selection go with the col where the correlation values are > 0.5
+# While doing the feature selection go with the col where the correlation values are > 0.5
 # Feature cols = R&D Spends and Marketing spends
 # Label = Profit
 
 
-# Creatae features using new cols
+# Create features using new cols
 
 new_features = final_data.iloc[:,[3,5]].values
 # print(new_features)
@@ -88,7 +88,7 @@ for rs in range(1,100):
 
 # 2. Backward feature elimination
 
-#1 . perform all in means create a col for the intercept and append it with the final dataset
+#1 . perform all-in means: create a new col for the intercept and append it with the final dataset
 
 
 for_ols = final_data.iloc[:, [0,1,2,3,4,5]]
@@ -130,7 +130,7 @@ onemoredataset = OLS_dataset[:, [0,1,2,3,4]]
 olsFormula = stat.OLS(endog = labels, exog=onemoredataset.astype('float')).fit()
 print(olsFormula.summary())
 
-# now all the pvalues are 0 only we can select all of them now;
+# now all the pvalues are 0 only, we can select all of them now;
 # final feature set = California, Florida, NY, RDSpend
 final_feature_set_OLS = OLS_dataset[:,[1,2,3,4]]
 
