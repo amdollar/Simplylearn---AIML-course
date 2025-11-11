@@ -1,7 +1,8 @@
 # Objective: 
+'''
 # Create a model that can classify the customer as a good or bad
 # customer based on customer's age and customer's estimated salary
-
+'''
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
