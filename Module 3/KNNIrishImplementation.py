@@ -49,4 +49,5 @@ model.fit(X_train, y_train)
 
 '''Evaluation of model:'''
 from sklearn.metrics import classification_report
-print(classification_report(label, ))
+print(classification_report(label, model.predict(features)))
+# Micro average is 0.97 that is > CL i.e.: 90 so we can approve this model
