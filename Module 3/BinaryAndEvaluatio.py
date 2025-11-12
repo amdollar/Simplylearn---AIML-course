@@ -19,7 +19,7 @@ features = data.iloc[:, [0,1]].values
 label = data.iloc[:,[2]].values
 
 # Decide the SL and CL values
-CL = 0.9
+CL = 0.8
 
 # Create a train and test split
 # Find the best random state 
