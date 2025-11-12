@@ -19,7 +19,7 @@ SL = 0.1
 CL = 1 - SL
 
 # Find the perfect K and random state value
-
+'''
 for rs in range (1, 10):
     for k in range(1, 20):
         X_train, X_test, y_train, y_test = train_test_split(features, label, test_size=0.2, random_state=rs)
@@ -31,7 +31,7 @@ for rs in range (1, 10):
         test_score= model.score(X_test, y_test)
 
         if test_score > train_score and test_score >= CL:
-            print(f'Test score: {test_score}, Train score: {train_score}, Random state: {rs}, K value : {k}')
+            print(f'Test score: {test_score}, Train score: {train_score}, Random state: {rs}, K value : {k}')'''
 
 '''Test score: 1.0, Train score: 0.975, Random state: 1, K value : 2
 Test score: 1.0, Train score: 0.95, Random state: 1, K value : 3
@@ -51,3 +51,16 @@ model.fit(X_train, y_train)
 from sklearn.metrics import classification_report
 print(classification_report(label, model.predict(features)))
 # Micro average is 0.97 that is > CL i.e.: 90 so we can approve this model
+
+from sklearn.metrics import accuracy_score
+model_accuracy= accuracy_score(label, model.predict(features))
+print(model_accuracy)
+
+
+ACCEPTANCE_THRESHOLD = CL
+print(f"Acceptance Threshold: {ACCEPTANCE_THRESHOLD:.4f}")
+
+if model_accuracy >= ACCEPTANCE_THRESHOLD:
+    print("\n✅ Model Approved: Accuracy meets or exceeds the required threshold.")
+else:
+    print("\n❌ Model Rejected: Accuracy is below the required threshold. Needs re-evaluation or retraining.")
