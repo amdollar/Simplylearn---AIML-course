@@ -46,12 +46,12 @@ Since this is a Classification problem: We can use Accuracy, Precision, Recall, 
 '''
 
 print(confusion_matrix(label, model.predict(features)))
-'''[[236  21]
- [ 40 103]]
+'''[[236  21]  S 257
+ [ 40 103]] S 143 
+Imbalanced dataset So we are going with the PR approach.
 
 # 1. 0Bad customer ---- 1Good customer
 # 2. 1Good customer ---- 0Bad customer
-
 '''
 
 print(classification_report(label, model.predict(features)))
@@ -59,4 +59,4 @@ print(classification_report(label, model.predict(features)))
 
 # P0 = 0.85
 # R1 = 0.72
-# Micro average = (2 * P0 * R1) / (P0 + R1) = 0.79 that is not greater than CL ---- Discard this model.
+# Micro average = P0+R1 / 2 = 0.785 that is not greater than CL ---- Discard this model.
