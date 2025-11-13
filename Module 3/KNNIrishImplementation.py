@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 import warnings
+import pickle
 
 warnings.filterwarnings('ignore')
 
@@ -64,3 +65,10 @@ if model_accuracy >= ACCEPTANCE_THRESHOLD:
     print("\n✅ Model Approved: Accuracy meets or exceeds the required threshold.")
 else:
     print("\n❌ Model Rejected: Accuracy is below the required threshold. Needs re-evaluation or retraining.")
+
+
+
+# Model deployment:
+
+pickle.dump(model, open('IrishKNNModel.pkl', 'wb'))
+
