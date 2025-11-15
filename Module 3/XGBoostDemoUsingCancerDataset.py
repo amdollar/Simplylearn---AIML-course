@@ -40,4 +40,24 @@ for rs in range(1,101):
     # Test score: 1.0, Train score: 1.0, for random state: 44
 
 
+# XGBoost with learning rate:
+
+CL = 0.8
+
+for rs in range (1, 101):
+    X_train, X_test, y_train, y_test = train_test_split(features,encoded_label, test_size= 0.2,random_state=rs)
+
+    model = XGBClassifier(learning_rate = 0.2)
+    model.fit(X_train, y_train)
+
+    train_score = model.score(X_train, y_train)
+    test_score = model.score(X_test, y_test)
+
+    if test_score >= train_score and test_score >= CL:
+        print('Generalized Model!! With hyper parameter')
+        print(f'Test score: {test_score}, Train score: {train_score}, for random state: {rs}')
+
+
+
+
     
