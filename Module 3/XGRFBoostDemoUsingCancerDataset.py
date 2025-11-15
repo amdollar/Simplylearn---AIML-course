@@ -33,7 +33,7 @@ CL = 0.8
 for rs in range(1, 101):
     X_train, X_test, y_train, y_test = train_test_split(features, encoded_label, test_size= 0.2, random_state= rs)
 
-    model = XGBRFClassifier(learning_rate = 0.1)
+    model = XGBRFClassifier(learning_rate = 0.4)
     model.fit(X_train, y_train)
 
     test_score = model.score(X_test, y_test)
