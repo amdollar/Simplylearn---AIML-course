@@ -31,10 +31,8 @@ print(features)
 
 # 2. Convert state data to numerical using OHE:
 
-state_imputer = OneHotEncoder(sparse=False)
-state_imputer.fit_transform(features[:,[3]])
-
-state_values = state_imputer.transform(features[:,[3]])
+state_imputer = OneHotEncoder(sparse_output=False)
+state_values = state_imputer.fit_transform(features[:,[3]])
 print(state_values)
 
 final_features = np.concatenate((state_values, features[:, [0,1,2]]), axis=1)
@@ -68,9 +66,9 @@ print(state_category)
 # 5. Predict, Deploy the model
 
 state_name = input("Enter the state name: ")
-r_d_spend = input('Enter the R&D Spend values: ')
-administration = input('Enter the Administration Spend values: ')
-marketing_spend = input('Enter the Marketing Spend Spend values: ')
+r_d_spend = float(input('Enter the R&D Spend values: '))
+administration = float(input('Enter the Administration Spend values: '))
+marketing_spend = float(input('Enter the Marketing Spend Spend values: '))
 
 print(f'State name: {state_name}, R&D spend value: {r_d_spend}, Adminstration value: {administration}, Marketing spend value: {marketing_spend}')
 
