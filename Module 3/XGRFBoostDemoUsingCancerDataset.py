@@ -26,7 +26,21 @@ for rs in range(1, 101):
     train_score = model.score(X_train, y_train)
 
     if test_score > train_score and test_score >= CL:
-        print('Generalized model.')
+        print('Generalized model without hyper parameter.')
+
+
+CL = 0.8
+for rs in range(1, 101):
+    X_train, X_test, y_train, y_test = train_test_split(features, encoded_label, test_size= 0.2, random_state= rs)
+
+    model = XGBRFClassifier(learning_rate = 0.1)
+    model.fit(X_train, y_train)
+
+    test_score = model.score(X_test, y_test)
+    train_score = model.score(X_train, y_train)
+
+    if test_score >= train_score and test_score >= CL:
+        print('Generalized model with hyper parameter.')
 
 
 
