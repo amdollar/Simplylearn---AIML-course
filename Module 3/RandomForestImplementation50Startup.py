@@ -14,7 +14,7 @@ label = data.iloc[:, [4]].values
 state_imputer = OneHotEncoder(sparse_output=False)
 state_values = state_imputer.fit_transform(features[:,[3]])
 print(state_values)
-
+                                                    
 final_feature = np.concatenate((state_values, features[:, [0,1,2]]), axis=1)
 print(final_feature)
 
@@ -34,3 +34,4 @@ for i in range(1,301):
   if testScore > trainScore and testScore >= CL:
     print(f"Test Score {testScore} | Train Score {trainScore} | RS {i}")
 
+# Test Score 0.982946799753128 | Train Score 0.9819764121295017 | RS 211
