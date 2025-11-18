@@ -3,7 +3,7 @@
 
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import cross_val_predict
+from sklearn.model_selection import cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -13,12 +13,16 @@ from sklearn.linear_model import LogisticRegression
 import warnings
 warnings.filterwarnings('ignore')
 
-models = [{'model_name':   'KNeighborClassification', 'instance' : KNeighborsClassifier()}, 
-          {'model_name': 'DecisionTreeClassifier', 'instance': DecisionTreeClassifier()},
-          {'model_name': 'RandomForestClassifier', 'instance': RandomForestClassifier()},
-          {'model_name': 'BaggingClassifier (KNeighborsClassifier)', 'instance': BaggingClassifier(KNeighborsClassifier())},
-          {'model_name': 'BaggingClassifier(LogisticRegression)', 'instance': BaggingClassifier(LogisticRegression())},
-          {'model_name': 'SVC', 'instance': SVC()}]
+# models = [{'model_name':   'KNeighborClassification', 'instance' : KNeighborsClassifier()}, 
+#           {'model_name': 'DecisionTreeClassifier', 'instance': DecisionTreeClassifier()},
+#           {'model_name': 'RandomForestClassifier', 'instance': RandomForestClassifier()},
+#           {'model_name': 'BaggingClassifier (KNeighborsClassifier)', 'instance': BaggingClassifier(KNeighborsClassifier())},
+#           {'model_name': 'BaggingClassifier(LogisticRegression)', 'instance': BaggingClassifier(LogisticRegression())},
+#           {'model_name': 'SVC', 'instance': SVC()}]
+
+models = [{'model_name': 'LogisticRegression', 'instance': LogisticRegression()},{'model_name': 'KNeighborsClassifier', 'instance': KNeighborsClassifier()},
+          {'model_name': 'DecisionTreeClassifier', 'instance':DecisionTreeClassifier()},{'model_name': 'SVC', 'instance': SVC()}, {'model_name': 'Bagging(LogisticRegression)', 'instance':  BaggingClassifier(LogisticRegression())},
+          {'model_name': 'Bagging(KNeighborsClassifier)', 'instance': BaggingClassifier(KNeighborsClassifier())}, ]
 
 
 data = pd.read_csv('Social_Network_Ads.csv')
@@ -29,7 +33,7 @@ cv_vals = [5,10]
 results = []
 for model in models:
     for cv in cv_vals:
-        values = cross_val_predict(model['instance'], 
+        values = cross_val_score(model['instance'], 
                           features,
                           labels, 
                           cv= cv)
@@ -40,6 +44,7 @@ for model in models:
         results.append({'Model': model_name, 'CVS': cvs_str, 'Scores': values.mean()})
 
 results_df = pd.DataFrame(results)
+print(results_df)
 
 '''
 Model: KNeighborClassification, CVS: 5, Scores: 0.305
