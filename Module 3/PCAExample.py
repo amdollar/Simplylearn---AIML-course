@@ -51,7 +51,9 @@ featureSet = np.array([[sepal_length, sepal_width, petal_length, petal_width]])
 
 # apply sc object:
 stdfeatures = scaler.transform(featureSet)
-# apply PCA:
+# apply PCA:3.
 transformedfeatues = pca.transform(stdfeatures)
 
 print(model.predict(transformedfeatues))
+
+
