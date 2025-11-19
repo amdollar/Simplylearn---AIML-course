@@ -3,6 +3,8 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.model_selection import train_test_split
+import warnings
+warnings.filterwarnings('ignore')
 
 
 data = pd.read_csv("https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv")
@@ -37,3 +39,19 @@ train_score = model.score(X_train, y_train)
 
 print(f'Train score: {train_score}, Test score: {test_score}')
 # Train score: 0.9, Test score: 0.9666666666666667
+
+# Deployment:
+sepal_length = float(input('Enter sepal length: '))
+sepal_width = float(input('Enter sepal width: '))
+petal_length = float(input('Enter petal length: '))
+petal_width = float(input('Enter petal width: '))
+
+# create feature:
+featureSet = np.array([[sepal_length, sepal_width, petal_length, petal_width]])
+
+# apply sc object:
+stdfeatures = scaler.transform(featureSet)
+# apply PCA:
+transformedfeatues = pca.transform(stdfeatures)
+
+print(model.predict(transformedfeatues))
