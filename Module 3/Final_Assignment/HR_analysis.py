@@ -69,9 +69,71 @@ class HRAnalyzer:
         sns.heatmap(correlation_matrix, annot=True, cmap = 'coolwarm', center=0, square=True, fmt= '.2f')
         plt.title('Correlation Matrix - Numerical Features', fontsize= 14, fontweight = 'bold')
         plt.tight_layout()
-        plt.savefig('Correlationheatmap.png', dip = 300, bbox_inches= 'tight')
+        plt.savefig('Correlationheatmap.png', dpi = 300, bbox_inches= 'tight')
         plt.show()
 
+        # 2.2 Distribution Plot:
+        print('\n 2.2. Creation of distribution plots..')
+        fig, axes = plt.subplots(1,3, figsize = (18, 5))
+
+        # Employee satisfaction:
+        axes[0].hist(self.df['satisfaction_level'], bins=30, alpha= 0.7, color= 'skyblue', edgecolor = 'black')
+        axes[0].set_title('Distribution of employee satisfaction level', fontweight = 'bold')
+        axes[0].set_xlabel('Satisfaction level')
+        axes[0].set_ylabel('Frequency')
+
+        # Employee Evaluation:
+        axes[1].hist(self.df['last_evaluation'], bins=30, alpha= 0.7, color= 'lightgreen', edgecolor = 'black')
+        axes[1].set_title('Distribution of last evaluation', fontweight = 'bold')
+        axes[1].set_xlabel('Last evaluation score')
+        axes[1].set_ylabel('Frequency')
+
+        # Employee Evaluation:
+        axes[2].hist(self.df['average_montly_hours'], bins=30, alpha= 0.7, color= 'salmon', edgecolor = 'black')
+        axes[2].set_title('Distribution of average monthly hours', fontweight = 'bold')
+        axes[2].set_xlabel('Average monthly hours')
+        axes[2].set_ylabel('Frequency')
+
+        plt.tight_layout()
+        plt.savefig('distribution_plots.png', dpi= 300, bbox_inches = 'tight')
+        plt.show()
+
+        # 2.3. Bar plot of project count by employee status
+        print('\n Creating bar plot for Project count analysis..')
+        plt.figure(figsize=(10,6))
+        sns.countplot(data= self.df, x='number_project', hue = 'left', palette=['lightblue', 'salmon'])
+        plt.title('Employee Project Count Distribution (Stayed vs Left)', fontsize=14, fontweight = 'bold')
+        plt.xlabel('Number of Projects')
+        plt.ylabel('Count')
+        plt.legend(title='Employee Status', labels=['Stayed', 'Left'])
+        plt.tight_layout()
+        plt.savefig('project_count_analysis.png', dpi = 300, bbox_inches= 'tight')
+        plt.show()
+
+        self._print_eda_insights()
+
+    def _print_eda_insights(self):
+        'Print insight from EDA'
+        print('\n Insights From EDA: ')
+        print('-' * 40)
+
+        # Project count insights
+        project_left = self.df[self.df['left']==1]['number_project'].value_counts().sort_index()
+        project_stayed = self.df[self.df['left']==0]['number_project'].value_counts().sort_index()
+
+        print('Peoject count analysis: ')
+        print(f'Employees who left most commonly worked on {project_left.idxmax()} projects')
+        print(f'Employees who stayed most commonly worked on {project_stayed.idxmax()} projects')
+
+        # Satisfaction insights
+        avg_satisfaction_left = self.df[self.df['left']== 1]['satisfaction_level'].mean()
+        avg_satisfaction_stayed = self.df[self.df['left']== 0]['satisfaction_level'].mean()
+
+        print(f'\n Satisfaction Analysis: ')
+        print(f'Average satisfaction of emplyees who left: {avg_satisfaction_left:.2f}')
+        print(f'Average satisfaction of emplyees who stayed: {avg_satisfaction_stayed:.2f}')
+
+    
 
 
     def run_complete_analysis(self):
