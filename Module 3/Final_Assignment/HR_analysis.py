@@ -3,11 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.cluster import KMeans
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score, StratifiedKFold
 from imblearn.over_sampling import SMOTE
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.metrics import classification_report, confusion_matrix, roc_curve, auc, roc_auc_score
 
 
 class HRAnalyzer:
@@ -224,7 +225,7 @@ class HRAnalyzer:
         
         # Saperate the categorical and numerical variables
         categorical_cols = self.df.select_dtypes(include=['object']).columns.tolist()
-        numerical_cols = self.df.select_dtypes(include=['np.number']).columns.tolist()
+        numerical_cols = self.df.select_dtypes(include=[np.number]).columns.tolist()
 
         print(f'Categorical columns: {categorical_cols}')
         print(f'Numerical columns: {numerical_cols}')
@@ -246,7 +247,7 @@ class HRAnalyzer:
         # 4.2 Startified train-test split
 
         print('\n 4.2 Performing stratified train-test split (80-20)...')
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size = 0.2, random_state= 123, startify= y)
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size = 0.2, random_state= 123, stratify= y)
         
         print(f'Train set shape: {self.X_train.shape}')
         print(f'Test set shape: {self.X_test.shape}')
@@ -276,7 +277,6 @@ class HRAnalyzer:
         
         # 5-fold cross-validation
 
-        from sklearn.model_selection import StratifiedKFold
         cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=123)
 
         for name, model in models.items():
@@ -287,7 +287,6 @@ class HRAnalyzer:
             self.models[name] = model
 
             # cross validation scores
-            from sklearn.model_selection import cross_val_score
             cv_score = cross_val_score(model, self.X_train_balanced, self.y_train_balanced, cv = cv, scoring= 'accuracy')
 
             print(f'5-fold CV Accuracy: {cv_score.mean():.4f} (+/- {cv_score.std() * 2:.4f})')
@@ -296,19 +295,196 @@ class HRAnalyzer:
             y_pred = model.predict(self.X_test)
             # Classification report
             print(f'\n Classification report for {name}: ')
-            from sklearn.metrics import classification_report
             print(classification_report(self.y_test, y_pred))
 
             # Store model performance
-            self.model_score[name] = {
+            self.model_scores[name] = {
                 'cv_mean': cv_score.mean(),
                 'cv_std': cv_score.std(),
                 'predictions': y_pred
             }
 
-                
-            
+    def identify_best_model(self):
+        '''Identify best model using ROC/AUC and confuction matrix.'''
+        print('\n' + '=' *60)
+        print('6. Best Model Identification')
+        print('=' * 60)
 
+        # 6.1 ROC/AUC analysis
+        print('\n 6.1 ROC/AUC Analysis...')
+        plt.figure(figsize=(12,8))
+
+        auc_scores = {}
+        for name, model in self.models.items():
+            # Get prediction probabilities
+            y_pred_proba = model.predict_proba(self.X_test)[:,1]
+
+            # Calculate ROC curve
+            fpr, tpr, _ = roc_curve(self.y_test, y_pred_proba)
+            roc_auc  = auc(fpr, tpr)
+            auc_scores[name] =roc_auc
+            
+            # Plot ORC curve
+            plt.plot(fpr,tpr, linewidth = 2, label= f'{name} (AUC = {roc_auc:.3f})')
+
+        # plot diagonal line
+        plt.plot([0,1], [0,1], 'k--', linewidth = 1)
+        plt.xlim([0.0,1.0])
+        plt.ylim([0.0,1.05])
+        plt.xlabel('False Positive Rate', fontsize = 12)
+        plt.ylabel('True Positive Rate', fontsize = 12)
+        plt.title('ROC Curves - Model Comparision', fontsize = 14, fontweight = 'bold')
+        plt.legend(loc= 'lower right')
+        plt.grid(True, alpha = 0.3)
+        plt.tight_layout()
+        plt.savefig('roc_curves.png', dpi= 300, bbox_inches = 'tight')
+        plt.show()
+
+        # 6.2 Confusion Matrix
+        print('\n 6.2 Confusion Matrix Analysis...')
+        fig, axes = plt.subplots(1,3,figsize= (18,5))
+        
+        from sklearn.metrics import confusion_matrix
+
+        for i, (name, model) in enumerate(self.models.items()):
+            y_pred = self.model_scores[name]['predictions']
+            cm = confusion_matrix(self.y_test, y_pred)
+
+            sns.heatmap(cm, annot=True, fmt='d', cmap= 'Blues', ax= axes[i])
+            axes[i].set_title(f'{name} \n Confusion Matrix', fontweight = 'bold')
+            axes[i].set_xlabel('Predicted')
+            axes[i].set_ylabel('Actual')
+
+        plt.tight_layout()
+        plt.savefig('confusion_matrices.png', dpi= 300, bbox_inches= 'tight')
+        plt.show()
+
+        # 6.3 Best model section and metric justification
+        best_model_name= max(auc_scores, key= auc_scores.get)
+        best_model = self.models[best_model_name]
+
+        print(f'\n 6.3 Best Model Section')
+        print('-' * 40)
+        print(f'Best Model: {best_model_name}')
+        print(f'AUC score: {auc_scores[best_model_name]:.4f}')
+
+        print(f'\n AUC scores for all models:')
+        for name, score in sorted(auc_scores.items(), key= lambda x: x[1], reverse= True):
+            print(f'{name}: {score:.4f}')
+
+        self._justify_metrics()
+
+        return best_model_name, best_model, auc_scores
+    
+    def _justify_metrics(self):
+        '''Justify the choice of evaluation metrics'''
+
+        print(f'\n Metrics Justification: ')
+        print('-' * 40)
+        print('For employee turnover prediction, we should prioritize ReCall Over Precision because:')
+        print("- It's more costly to lose a valuable employee than to invest in retention")
+        print("- False Negative (missing employees who will leave) are more expensive than False Positives")
+        print("- We want to identify as many at-risk emploees as possible for proactive retention")
+        print("- AUC-ROC is ideal as it considers both True Positive Rate and Flase Positive Rate")
+
+
+    def retention_strategies(self, best_model_name, best_model):
+        '''Suggest retention strategies based on risk zones'''
+        print('\n' + '=' * 60)
+        print('7. Retention Strategies')
+        print('=' * 60)
+
+        # 7. 1 Predict Probabilities on test data
+        print('\n 7.1 Predicting turnover probabilites...')
+        y_pred_proba = best_model.predict_proba(self.X_test)[:,1]
+
+        # Create results dataframe
+        results_df= pd.DataFrame({
+            'actual': self.y_test.values,
+            'probability': y_pred_proba
+        })
+
+        # 7.2 Categorize emplyees into risk zones
+        print('\n 7.2 Categorizing employees into risk zones...')
+        def categories_risk(prob):
+            if prob < 0.20:
+                return 'Safe zone (Green)'
+            elif prob < 0.60:
+                return 'Low-Risk zone (Yellow)'
+            elif prob < 0.90:
+                return 'Medium-Risk zone (Orange)'
+            else:
+                return 'High-Risk zone (Red)'
+
+        results_df['risk_zone'] = results_df['probability'].apply(categories_risk)
+
+
+        # Analyze risk zones
+        zone_analysis = results_df['risk_zone'].value_counts()
+        print('Employee Distribution by Risk Zone: ')
+        for zone, count in zone_analysis.items():
+            percentage = (count/ len(results_df)) * 100
+            print(f'- {zone}: {count} employees ({percentage:.1f} %)')
+
+        # Visualize risk zones
+        plt.figure(figsize=(12,8))
+        colors= ['green', 'yellow', 'orange', 'red']
+        zone_order = ['Safe Zone (Green)', 'Low-Risk Zone (Yellow)', 'Medium-Risk Zone (Orange)', 'High-Risk Zone(Red)']
+
+
+        # Filter zones that exist in data
+        existing_zones = [zone for zone in zone_order if zone in zone_analysis.index]
+        zone_counts = [zone_analysis[zone] for zone in existing_zones]
+        zone_colors = colors[:len(existing_zones)]
+
+        plt.pie(zone_counts, labels=existing_zones, colors = zone_colors, autopct= '%1.1f%', startangle=90)
+        plt.title('Employee Distribution by Turnover Risk Zone', fontsize= 14, fontweight = 'bold')
+        plt.axis('equal')
+        plt.tight_layout()
+        plt.savefig('risk_zones.png', dpi= 300, bbox_inches='tight')
+        plt.show()
+
+        # Retention strategies
+        self._suggest_retention_strategies()
+
+        return results_df
+    
+    def _suggest_retention_strategies(self):
+        '''Provide detailed retention strategies got each risk zone'''
+        print(f'\n Retention strategies by Risk Zone: ')
+        print('=' * 50)
+
+        strategies = {
+            'Safe Zone (Green) - Score < 20%':[
+                'Maintain current engagement levels',
+                'Regular check-ins and feedback sessions',
+                'Provide growth opportunities and skill development',
+                'Recognition and appreciation program'
+            ],
+            'Low-Risk Zone (Yellow) - 20% < Score < 60%':[
+                'Monitor satisfaction level closely',
+                'Conduct stay interview to understand concerns',
+                'Provide additional training and development opportunities',
+                'Consider workload adjustments if needed'
+            ],
+            'Medium-Risk Zone  (Orange) - 60 % < Score < 90 %':[
+                'Immediate manager intervention required', 
+                'Career development planning and mentoring',
+                'Flexible work arrengements consideration',
+                'Compensation and benefits review'
+            ],
+            'High-Risk Zone (Red)- Score > 90%':[
+                'Urgent: Executive / HR immediate attention',
+                'Comprehensive retention package',
+                'Role redesign or department transfer options',
+                'Exit interview preparation if retention fails'
+            ]
+        }
+
+        for zone, actions in strategies.items():
+            print(f'\n {zone}:')
+            for action in actions:
+                print(f'{action}')
 
 
     def run_complete_analysis(self):
@@ -337,12 +513,35 @@ class HRAnalyzer:
         self.train_and_evaluate_models()
 
         # Step 6: Best Model identification:
+        best_model_name, best_model, auc_score = self.identify_best_model()
+
+        # Step 7: Retention strategies
+        result_df = self.retention_strategies(best_model_name, best_model)
+
+        print('\n' + '=' *60)
+        print('Analysis Completed')
+        print('=' * 60)
+        print('Generated Visualiztions: ')
+        print('correlation_heatmap.png')
+        print('distribution_plots.png')
+        print('project_count_analysis.png')
+        print('employee_clustering.png')
+        print('roc_curves.png')
+        print('confusion_matrics.png')
+        print('risk_zones.png')
+
+        return result_df, best_model_name, best_model
+
+
+
 
 
 
 if __name__ == '__main__':
     analyzer = HRAnalyzer('HR_Comma_sep.csv')
+    result, best_model_name, best_model = analyzer.run_complete_analysis()
 
+    print(f'\n Final Results Summary:')
+    print(f'Best Model: {best_model_name}')
+    print(f'Analysis completed successfully!')
 
-
-    analyzer.run_complete_analysis()
