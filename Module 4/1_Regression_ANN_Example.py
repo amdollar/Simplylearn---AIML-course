@@ -1,20 +1,19 @@
-# NOTE: Setup the Python workspace before running:
-# 1) From this folder run: create_venv.bat
-# 2) Activate the created virtualenv (.venv\Scripts\activate) and then run this script.
-# 3) If using PowerShell run: .\create_venv.ps1
+# Create a model that can predict the salary of the employee based on his/her years of experience
+
 
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
 
-data = pd.read_csv("Social_Network_Ads.csv")
+data = pd.read_csv("Salary_Data.csv")
 print(data.head(5))
 print(data.info())
 
 # saperate the features and label columns
-print(data.Purchased.value_counts())
+# print(data.Purchased.value_counts())
 
 
 ''' Rules for classification in ANN:
@@ -27,14 +26,16 @@ print(data.Purchased.value_counts())
 
 '''
 
-features = data.iloc[:,[0,1]].values
-labels = data.iloc[:,[2]].values
+features = data.iloc[:,[0]].values
+labels = data.iloc[:,[1]].values
 
 # Scale Features:
 sscaler = StandardScaler()
 transformed_features = sscaler.fit_transform(features)
 
-# Lables are already 0 and 1
+# Lables Scaling
+minMaxLabel = MinMaxScaler()
+label = minMaxLabel.fit_transform(labels)
 
 # Train test split:
 X_train, X_test, y_train, y_test = train_test_split(transformed_features, labels, test_size=0.2, random_state=1)
@@ -48,4 +49,18 @@ X_train, X_test, y_train, y_test = train_test_split(transformed_features, labels
 5. Deploy the Model
 
 '''
+
+# Architecting the model:
+model = tf.keras.Sequential()
+
+model.add(tf.keras.layers.Dense(units=100, activation="sigmoid", input_shape=(1,)))
+model.add(tf.keras.layers.Dense(units=100, activation='sigmoid'))
+model.add(tf.keras.layers.Dense(units=100, activation='sigmoid'))
+model.add(tf.keras.layers.Dense(units=1, activation='linear'))
+
+# Compiling the Model:
+model.compile(optimizer= 'sgd', loss= 'mean_squared_error', metrics= [tf.keras.metrics.R2Score()])
+
+# Train the model:
+print(model.fit(X_train, y_train, validation_data= (X_test, y_test), epochs=6000))
 

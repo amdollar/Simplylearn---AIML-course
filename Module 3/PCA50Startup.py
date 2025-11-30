@@ -56,13 +56,11 @@ state_i = encoder.transform(np.array([[state]]))
 print(state_i)
 input_features = np.concatenate((state_i, np.array([[rdSpend, administration, marketingSpend]])), axis = 1)
 
-
-
-# predicted_value = model.predict(input_features)
-# print(f'Predicted profit after PCA: {predicted_value}')
-# Apply the same scaler and PCA transforms to the single input sample, then predict
+# Apply Scaling
 scaled_input = scaler.transform(input_features)
+# Apply PCA
 pca_input = pca.transform(scaled_input)
 
+#Predict the output
 predicted_profit = model.predict(pca_input)
 print(f'Predicted profit after PCA: {predicted_profit}')
