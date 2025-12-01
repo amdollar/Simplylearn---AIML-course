@@ -61,9 +61,9 @@ print(final_featues)
 # s_features = sc.fit_transform(final_featues)
 # print(s_features)
 
-data_cols = ['R&D Spend','Administration','Marketing Spend']
-for col in range(data_cols.shape):
-   check_normality(col)
+# data_cols = ['R&D Spend','Administration','Marketing Spend']
+# for col in range(data_cols.shape):
+#    check_normality(col)
    
 
 rs = RobustScaler()
@@ -89,9 +89,10 @@ X_train, X_test, y_train, y_test = train_test_split(s_features, m_labels, test_s
 
 model = tf.keras.Sequential()
 
-model.add(tf.keras.layers.Dense(units = 15, activation='relu', input_shape=(6,)))
+model.add(tf.keras.layers.Dense(units = 100, activation='relu', input_shape=(6,)))
 # Handle the no of feature cols and activation function as per rules.
-model.add(tf.keras.layers.Dense(units= 15, activation='relu'))
+model.add(tf.keras.layers.Dense(units= 100, activation='relu'))
+model.add(tf.keras.layers.Dense(units= 100, activation='relu'))
 model.add(tf.keras.layers.Dense(units= 1, activation='linear'))
 
 # 2. Model compile:
@@ -129,3 +130,37 @@ model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs= 100000 ,
 # Epoch 5028/100000
 # 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 107ms/step - loss: 6.7189e-04 - r2_score: 0.9862 - val_loss: 0.0045 - val_r2_score: 0.9215
 
+
+# # 3 layers of 15 units and Adam and Robust scaler: Increasing the layer and units now
+# /2 ━━━━━━━━━━━━━━━━━━━━ 0s 131ms/step - loss: 1.9212e-08 - r2_score: 1.0000 - val_loss: 0.0085 - val_r2_score: 0.8516
+# Epoch 3239/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 107ms/step - loss: 2.2403e-08 - r2_score: 1.0000 - val_loss: 0.0085 - val_r2_score: 0.8517
+# Epoch 3240/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 104ms/step - loss: 1.9474e-08 - r2_score: 1.0000 - val_loss: 0.0085 - val_r2_score: 0.8517
+# Epoch 3241/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 110ms/step - loss: 1.3799e-08 - r2_score: 1.0000 - val_loss: 0.0085 - val_r2_score: 0.8517
+# Epoch 3242/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 107ms/step - loss: 2.1551e-08 - r2_score: 1.0000 - val_loss: 0.0085 - val_r2_score: 0.8516
+# Epoch 3243/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 106ms/step - loss: 1.8879e-08 - r2_score: 1.0000 - val_loss: 0.0085 - val_r2_score: 0.8515
+# Epoch 3244/100000
+
+'''Success case: 1 Adam with 100 unit'''
+# with adam and robust scaler with increased hidden layers with the Units: Trying again with sgd with same configs
+# Epoch 10/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 105ms/step - loss: 0.0189 - r2_score: 0.6124 - val_loss: 0.0177 - val_r2_score: 0.6922
+# Epoch 11/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 117ms/step - loss: 0.0124 - r2_score: 0.7448 - val_loss: 0.0098 - val_r2_score: 0.8297
+# Epoch 12/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 167ms/step - loss: 0.0100 - r2_score: 0.7945 - val_loss: 0.0073 - val_r2_score: 0.8737
+
+# Not giving any generalized model with SGD even with same configs:
+# Epoch 4689/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 108ms/step - loss: 9.5705e-05 - r2_score: 0.9980 - val_loss: 0.0037 - val_r2_score: 0.9349
+# Epoch 4690/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 112ms/step - loss: 9.5631e-05 - r2_score: 0.9980 - val_loss: 0.0037 - val_r2_score: 0.9349
+# Epoch 4691/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 107ms/step - loss: 9.6250e-05 - r2_score: 0.9980 - val_loss: 0.0038 - val_r2_score: 0.9346
+# Epoch 4692/100000
+
+#
