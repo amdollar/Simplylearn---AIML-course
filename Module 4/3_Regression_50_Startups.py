@@ -101,6 +101,36 @@ model.compile(optimizer = 'adam',loss = 'mean_squared_error' ,metrics = [tf.kera
 
 # 3. Fit the model/ Train
 model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs= 100000 ,callbacks=[MyCLRuleMonitor(.85)])
+
+
+
+# Testing app:
+rdspends = float(input('Enter the r&d spends: '))
+adminspends = float(input('Enter the admin spends: '))
+marketingspends = float(input('Enter the marketing spends: '))
+state = input('Enter the location: ')
+
+# Encode the state value:
+state_values = ohe.categories_[0]
+while state not in state_values:
+   state = input('Enter the location: ')
+
+# Transform this value:
+input_state = ohe.transform(np.array([[state]]))
+input_final_features = np.concatenate((input_state, np.array([[rdspends, adminspends, marketingspends]])), axis = 1)
+
+# Scale the features:
+scaled_input = rs.fit_transform(input_final_features)
+predicted_values = model.predict(scaled_input)
+
+# reverse transform the predicted value:
+profit  = mn.inverse_transform(predicted_values)
+
+print(f'For values: {rdspends},{adminspends}, {marketingspends}, and {state}: Expected profit is: {profit}')
+# 1/1 ━━━━━━━━━━━━━━━━━━━━ 0s 102ms/step
+# For values: 1233.0,1232.0, 4433.0, and Florida: Expected profit is: [[31891.148]]
+   
+
 # The problem was with the concat operation when I did not concat the value of 3rd col in the feature dataset
 
 # 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 76ms/step - loss: 0.1263 - r2_score: 0.8703 - val_loss: 0.0402 - val_r2_score: 0.8732
@@ -154,6 +184,12 @@ model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs= 100000 ,
 # Epoch 12/100000
 # 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 167ms/step - loss: 0.0100 - r2_score: 0.7945 - val_loss: 0.0073 - val_r2_score: 0.8737
 
+'''Success case: 2 Adam with feature*3 = 18 unit'''
+# Epoch 43/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 113ms/step - loss: 0.0158 - r2_score: 0.6751 - val_loss: 0.0094 - val_r2_score: 0.8361
+# Epoch 44/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 112ms/step - loss: 0.0151 - r2_score: 0.6902 - val_loss: 0.0085 - val_r2_score: 0.8523
+
 # Not giving any generalized model with SGD even with same configs:
 # Epoch 4689/100000
 # 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 108ms/step - loss: 9.5705e-05 - r2_score: 0.9980 - val_loss: 0.0037 - val_r2_score: 0.9349
@@ -163,4 +199,12 @@ model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs= 100000 ,
 # 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 107ms/step - loss: 9.6250e-05 - r2_score: 0.9980 - val_loss: 0.0038 - val_r2_score: 0.9346
 # Epoch 4692/100000
 
-#
+'''Success results: 3 with Adamax Units = 100'''
+# #Epoch 12/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 104ms/step - loss: 0.0150 - r2_score: 0.6911 - val_loss: 0.0095 - val_r2_score: 0.8344
+# Epoch 13/100000
+# 2/2 ━━━━━━━━━━━━━━━━━━━━ 0s 104ms/step - loss: 0.0119 - r2_score: 0.7558 - val_loss: 0.0072 - val_r2_score: 0.8752
+
+'''Success results: 3 with Adamax Units = 18'''
+
+# Not getting generalized model even after 3k iterations
