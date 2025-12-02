@@ -19,8 +19,8 @@ class MyCLRuleMonitor(tf.keras.callbacks.Callback):
 
 
   def on_epoch_end(self,epoch,logs=None):
-    testScore = logs['val_r2_score']
-    trainScore = logs['r2_score']
+    testScore = logs['val_accuracy']
+    trainScore = logs['accuracy']
 
     if testScore > trainScore and testScore >= self.CL:
       self.model.stop_training = True
@@ -32,8 +32,8 @@ print(data.isna().sum()) # No null values
 # Purchased          0
 
 # 2. Splitting data in features and labels:
-features = data.iloc[:,[0,1]].iloc
-labels = data.iloc[:,[2]].iloc
+features = data.iloc[:,[0,1]].values
+labels = data.iloc[:,[2]].values
 
 # 3. Check if data is Normally distributed or not:
 cols = ['Age', 'EstimatedSalary', 'Purchased']
@@ -52,10 +52,10 @@ def get_scaler(cols):
             return RobustScaler()
 
 rs = RobustScaler()
-s_features = rs.fit_transform(features[:, [0,1]])
+s_features = rs.fit_transform(features)
 
 mn = MinMaxScaler()
-s_labels = mn.fit_transform(labels[:, [2]])
+s_labels = mn.fit_transform(labels)
 
 # Train test split:
 
@@ -69,16 +69,24 @@ X_train, X_test, y_train, y_test = train_test_split(s_features, s_labels, test_s
 # 5. Deploy the Model
 
 # 1. Architecting the Model:
-model = tf.keras.Sequeltial()
+model = tf.keras.Sequential()
 
 #    Creating the Input, Hidden and Output layers:
-model.add(tf.keras.layers.Dense(units = 100, activation='sgd', input_shape = (2,)))
+model.add(tf.keras.layers.Dense(units = 100, activation='relu', input_shape = (2,)))
 
-model.add(tf.keras.layers.Dense(units=100, activation='sgd'))
-model.add(tf.keras.layers.Dense(units=100, activation='sgd'))
-model.add(tf.keras.layers.Dense(units=100, activation='sgd'))
+model.add(tf.keras.layers.Dense(units=100, activation='relu'))
+model.add(tf.keras.layers.Dense(units=100, activation='relu'))
+model.add(tf.keras.layers.Dense(units=100, activation='relu'))
 model.add(tf.keras.layers.Dense(units=1, activation='linear'))
 
 # 2. Model compilation:
+#For Classification
+#
+# 1. Binary Classification ---- binary_crossentropy
+# 2. MultiClass Classification --- categorical_crossentropy | sparse_categorical_crossentropy
 
-model.compile(optimizer = 'adam', )
+# i. forward propogation
+model.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+
+# i. backward propogation
+model.fit(X_train,y_train,validation_data=(X_test,y_test), epochs = 10000000000, callbacks=[MyCLRuleMonitor(0.8)])
