@@ -107,10 +107,10 @@ input_arr = np.array([[i_age, i_sal]])
 scaled_input_features = rs.fit_transform(input_arr)
 
 predicted_value = model.predict(scaled_input_features)
-print(predicted_value) # [[0.16993988]]
+# print(predicted_value) # [[0.16993988]]
 
 predicted_class = (predicted_value > 0.5).astype(int)
-print(predicted_class) #[[0]]
+# print(predicted_class) #[[0]]
 
 if predicted_class[0][0] > 0.5:
    print('Good customer')
