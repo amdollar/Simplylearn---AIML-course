@@ -86,7 +86,7 @@ model.add(tf.keras.layers.Dense(units=1, activation='linear'))
 # 2. MultiClass Classification --- categorical_crossentropy | sparse_categorical_crossentropy
 
 # i. forward propogation
-model.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+model.compile(optimizer = 'sgd', loss = 'binary_crossentropy', metrics = ['accuracy'])
 
 # i. backward propogation
 model.fit(X_train,y_train,validation_data=(X_test,y_test), epochs = 10000000000, callbacks=[MyCLRuleMonitor(0.8)])
@@ -102,14 +102,17 @@ i_sal = input('Enter Estimated Salary of person: ')
 # 2. Data must be in 2d array
 # 3. Data must be scaled
 
-ia_age = np.array([[i_age]])
-ia_sal = np.array([[i_sal]])
+input_arr = np.array([[i_age, i_sal]])
 
-input_features = np.concatenate((ia_age, ia_sal), axis= 1)
-scaled_input_features = rs.fit_transform(input_features)
+scaled_input_features = rs.fit_transform(input_arr)
 
 predicted_value = model.predict(scaled_input_features)
+print(predicted_value) # [[0.16993988]]
 
-# reverse transform: 
-salary = mn.inverse_transform(predicted_value)
-print(salary)
+predicted_class = (predicted_value > 0.5).astype(int)
+print(predicted_class) #[[0]]
+
+if predicted_class[0][0] > 0.5:
+   print('Good customer')
+else:
+   print('Bad customer')
