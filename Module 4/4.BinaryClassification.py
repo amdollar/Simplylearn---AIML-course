@@ -11,6 +11,20 @@ import tensorflow as tf
 data = pd.read_csv('Social_Network_Ads.csv')
 print(data.head(5))
 
+# Class to control the flow/limit of execution.
+class MyCLRuleMonitor(tf.keras.callbacks.Callback):
+  def __init__(self,CL):
+    super(MyCLRuleMonitor,self).__init__()
+    self.CL = CL
+
+
+  def on_epoch_end(self,epoch,logs=None):
+    testScore = logs['val_r2_score']
+    trainScore = logs['r2_score']
+
+    if testScore > trainScore and testScore >= self.CL:
+      self.model.stop_training = True
+
 # 1. Check the data quality and perform Preprocessing:
 print(data.isna().sum()) # No null values
 # Age                0
@@ -64,3 +78,7 @@ model.add(tf.keras.layers.Dense(units=100, activation='sgd'))
 model.add(tf.keras.layers.Dense(units=100, activation='sgd'))
 model.add(tf.keras.layers.Dense(units=100, activation='sgd'))
 model.add(tf.keras.layers.Dense(units=1, activation='linear'))
+
+# 2. Model compilation:
+
+model.compile(optimizer = 'adam', )
