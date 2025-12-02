@@ -6,6 +6,7 @@ import numpy as np
 from scipy.stats import shapiro
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
 from sklearn.model_selection import train_test_split
+import tensorflow as tf
 
 data = pd.read_csv('Social_Network_Ads.csv')
 print(data.head(5))
@@ -52,3 +53,14 @@ X_train, X_test, y_train, y_test = train_test_split(s_features, s_labels, test_s
 # 3. Fit the Model/ Train
 # 4. Evaluate the Model
 # 5. Deploy the Model
+
+# 1. Architecting the Model:
+model = tf.keras.Sequeltial()
+
+#    Creating the Input, Hidden and Output layers:
+model.add(tf.keras.layers.Dense(units = 100, activation='sgd', input_shape = (2,)))
+
+model.add(tf.keras.layers.Dense(units=100, activation='sgd'))
+model.add(tf.keras.layers.Dense(units=100, activation='sgd'))
+model.add(tf.keras.layers.Dense(units=100, activation='sgd'))
+model.add(tf.keras.layers.Dense(units=1, activation='linear'))
