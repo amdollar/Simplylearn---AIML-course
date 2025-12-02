@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from scipy.stats import shapiro
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
+from sklearn.model_selection import train_test_split
 
 data = pd.read_csv('Social_Network_Ads.csv')
 print(data.head(5))
@@ -36,9 +37,18 @@ def get_scaler(cols):
             return RobustScaler()
 
 rs = RobustScaler()
-s_age = rs.fit_transform(features[:, [0,1]])
+s_features = rs.fit_transform(features[:, [0,1]])
 
 mn = MinMaxScaler()
-s_purchased = mn.fit_transform(labels[:, [2]])
+s_labels = mn.fit_transform(labels[:, [2]])
 
-# 
+# Train test split:
+
+X_train, X_test, y_train, y_test = train_test_split(s_features, s_labels, test_size= 0.2, random_state=122)
+
+# Building model:
+# 1. Architecting model
+# 2. Compile Model
+# 3. Fit the Model/ Train
+# 4. Evaluate the Model
+# 5. Deploy the Model
