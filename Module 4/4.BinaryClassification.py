@@ -72,11 +72,11 @@ X_train, X_test, y_train, y_test = train_test_split(s_features, s_labels, test_s
 model = tf.keras.Sequential()
 
 #    Creating the Input, Hidden and Output layers:
-model.add(tf.keras.layers.Dense(units = 100, activation='relu', input_shape = (2,)))
+model.add(tf.keras.layers.Dense(units = 6, activation='sigmoid', input_shape = (2,)))
 
-model.add(tf.keras.layers.Dense(units=100, activation='relu'))
-model.add(tf.keras.layers.Dense(units=100, activation='relu'))
-model.add(tf.keras.layers.Dense(units=100, activation='relu'))
+model.add(tf.keras.layers.Dense(units=6, activation='sigmoid'))
+model.add(tf.keras.layers.Dense(units=6, activation='sigmoid'))
+model.add(tf.keras.layers.Dense(units=6, activation='sigmoid'))
 model.add(tf.keras.layers.Dense(units=1, activation='linear'))
 
 # 2. Model compilation:
