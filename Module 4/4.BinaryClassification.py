@@ -72,11 +72,11 @@ X_train, X_test, y_train, y_test = train_test_split(s_features, s_labels, test_s
 model = tf.keras.Sequential()
 
 #    Creating the Input, Hidden and Output layers:
-model.add(tf.keras.layers.Dense(units = 6, activation='sigmoid', input_shape = (2,)))
+model.add(tf.keras.layers.Dense(units = 60, activation='relu', input_shape = (2,)))
 
-model.add(tf.keras.layers.Dense(units=6, activation='sigmoid'))
-model.add(tf.keras.layers.Dense(units=6, activation='sigmoid'))
-model.add(tf.keras.layers.Dense(units=6, activation='sigmoid'))
+model.add(tf.keras.layers.Dense(units=60, activation='relu'))
+model.add(tf.keras.layers.Dense(units=60, activation='relu'))
+model.add(tf.keras.layers.Dense(units=60, activation='relu'))
 model.add(tf.keras.layers.Dense(units=1, activation='linear'))
 
 # 2. Model compilation:
@@ -90,3 +90,26 @@ model.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accu
 
 # i. backward propogation
 model.fit(X_train,y_train,validation_data=(X_test,y_test), epochs = 10000000000, callbacks=[MyCLRuleMonitor(0.8)])
+
+# Epoch 131/10000000000
+# 10/10 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step - accuracy: 0.8406 - loss: 0.3160 - val_accuracy: 0.8500 - val_loss: 0.4860
+
+# Input:
+i_age = input('Enter age of person: ')
+i_sal = input('Enter Estimated Salary of person: ')
+
+# 1. data must be Numeric
+# 2. Data must be in 2d array
+# 3. Data must be scaled
+
+ia_age = np.array([[i_age]])
+ia_sal = np.array([[i_sal]])
+
+input_features = np.concatenate((ia_age, ia_sal), axis= 1)
+scaled_input_features = rs.fit_transform(input_features)
+
+predicted_value = model.predict(scaled_input_features)
+
+# reverse transform: 
+salary = mn.inverse_transform(predicted_value)
+print(salary)
