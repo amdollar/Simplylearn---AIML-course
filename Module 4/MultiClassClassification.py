@@ -4,6 +4,8 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import train_test_split
+import tensorflow as tf
+
 
 data = pd.read_csv("https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv")
 class MyCLRuleMonitor(tf.keras.callbacks.Callback):
@@ -83,19 +85,22 @@ X_train, X_test, y_train, y_test = train_test_split(s_features, s_labels, test_s
 5. Deployment and User testing
 '''
 
-import tensorflow as tf
 
 # 1. Model architecting:
 model = tf.keras.Sequential()
 
-model.add(tf.keras.layers.Dense(units = 100, activation= 'sigmoid', input_shape=(4,)))
-model.add(tf.keras.layers.Dense(units = 100, activation= 'sigmoid'))
-model.add(tf.keras.layers.Dense(units = 100, activation= 'sigmoid'))
-model.add(tf.keras.layers.Dense(units = 100, activation= 'sigmoid'))
-model.add(tf.keras.layers.Dense(units=1, activation='linear'))
+model.add(tf.keras.layers.Dense(units = 120, activation= 'relu', input_shape=(4,)))
+model.add(tf.keras.layers.Dense(units = 120, activation= 'relu'))
+model.add(tf.keras.layers.Dense(units = 120, activation= 'relu'))
+model.add(tf.keras.layers.Dense(units = 120, activation= 'relu'))
+model.add(tf.keras.layers.Dense(units=1, activation='softmax'))
 
 # 2. Compile the model: Forward propogation:
-model.compile(optimizer = 'sgd', loss= 'binart_', metics = ['accuracy'])
+model.compile(optimizer = 'sgd', loss= 'categorical_crossentropy', metrics = ['accuracy'])
 
 #3. train the model:
-model.fit(epochs = 10000, callbacks= )
+model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = 100000, callbacks= [MyCLRuleMonitor(0.9)])
+
+# Test 1: With sigmoid (Units 12) now facing Gradient descent problem, the accuracy is stucked at .5333 after 300 epochs
+# Test 2: With relu (Units 12) now facing Gradient descent problem, the accuracy is stucked at .2000 after 300 epochs
+# Test 3: With relu (Units 120) now facing Gradient descent problem, the accuracy is stucked at .2000 after 300 epochs
