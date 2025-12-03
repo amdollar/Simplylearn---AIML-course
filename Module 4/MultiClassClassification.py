@@ -2,7 +2,7 @@
 
 import pandas as pd
 import numpy as np
-
+from sklearn.preprocessing import StandardScaler, LabelEncoder
 data = pd.read_csv("https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv")
 
 print(data.info())
@@ -46,7 +46,12 @@ for col in cols:
 1. Data must be complete.
 2. Data needs to be strictly Numeric
 3. Features and Labels must be in form of 2d array.
-3. Data needs to be Scaled: Features (Optional,  but good to do) / Labels: Mandatory
+4. Data needs to be Scaled: Features (Optional,  but good to do) / Labels: Mandatory
     i. Binary-classification: labels must be represented in form of 0 or 1.
-    ii. Multiclass-classification: 
-3. '''
+    ii. Multiclass-classification: lebels must be discrete numerical or Dymmy Variables '''
+
+# Labels must be Numeric : Using LabelEncoder
+le = LabelEncoder()
+s_labels= le.fit_transform(label)
+print(s_labels)
+
