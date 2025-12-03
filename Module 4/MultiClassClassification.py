@@ -55,3 +55,6 @@ le = LabelEncoder()
 s_labels= le.fit_transform(label)
 print(s_labels)
 
+sc = StandardScaler()
+s_features = sc.fit_transform(features)
+print(s_features)
