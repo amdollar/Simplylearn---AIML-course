@@ -36,7 +36,17 @@ def get_scaler(col):
     else:
         print(f'{col} is not Normally distributed..')
 
-cols = ['sepal.length', 'sepal.width','petal.length', 'petal.width' ,'variety']
+cols = ['sepal.length', 'sepal.width','petal.length', 'petal.width' ]
 
 for col in cols:
     get_scaler(col)
+    # All the feature cols are Normally Distributed.
+
+'''For data to be processed by Deep learning model:
+1. Data must be complete.
+2. Data needs to be strictly Numeric
+3. Features and Labels must be in form of 2d array.
+3. Data needs to be Scaled: Features (Optional,  but good to do) / Labels: Mandatory
+    i. Binary-classification: labels must be represented in form of 0 or 1.
+    ii. Multiclass-classification: 
+3. '''
