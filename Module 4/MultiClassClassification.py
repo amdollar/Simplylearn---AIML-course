@@ -3,6 +3,8 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.model_selection import train_test_split
+
 data = pd.read_csv("https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv")
 
 print(data.info())
@@ -53,8 +55,20 @@ for col in cols:
 # Labels must be Numeric : Using LabelEncoder
 le = LabelEncoder()
 s_labels= le.fit_transform(label)
-print(s_labels)
+# print(s_labels)
 
 sc = StandardScaler()
 s_features = sc.fit_transform(features)
-print(s_features)
+# print(s_features)
+
+# Train test split 
+X_train, X_test, y_train, y_test = train_test_split(s_features, s_labels, test_size=0.2, random_state = 232)
+
+'''Deep learning Model Building steps:
+1. Architect the model
+2. Compile the model
+3. Train the model
+4. Evaluate the model
+5. Deployment and User testing
+'''
+
