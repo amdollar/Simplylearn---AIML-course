@@ -2,7 +2,7 @@
 
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.preprocessing import StandardScaler, LabelEncoder, OneHotEncoder
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
 
@@ -96,11 +96,39 @@ model.add(tf.keras.layers.Dense(units = 120, activation= 'relu'))
 model.add(tf.keras.layers.Dense(units=1, activation='softmax'))
 
 # 2. Compile the model: Forward propogation:
-model.compile(optimizer = 'sgd', loss= 'categorical_crossentropy', metrics = ['accuracy'])
+model.compile(optimizer = 'adam', loss= 'categorical_crossentropy', metrics = ['accuracy'])
 
 #3. train the model:
-model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = 100000, callbacks= [MyCLRuleMonitor(0.9)])
+# model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = 100000, callbacks= [MyCLRuleMonitor(0.8)])
 
 # Test 1: With sigmoid (Units 12) now facing Gradient descent problem, the accuracy is stucked at .5333 after 300 epochs
 # Test 2: With relu (Units 12) now facing Gradient descent problem, the accuracy is stucked at .2000 after 300 epochs
 # Test 3: With relu (Units 120) now facing Gradient descent problem, the accuracy is stucked at .2000 after 300 epochs
+# Test 4: With relu (Units 120) and Adam now facing Gradient descent problem, the accuracy is stucked at .533 after 300 epochs
+
+'''Giving a try with another dummy variable encoding'''
+
+
+ohe = tf.keras.utils.to_categorical(s_labels)
+
+print(ohe)
+
+
+from sklearn.model_selection import train_test_split
+X_train,X_test,y_train,y_test = train_test_split(features,
+                                                 ohe,
+                                                 test_size=0.2,
+                                                 random_state=10)
+
+model1 = tf.keras.Sequential()
+
+model1.add(tf.keras.layers.Dense(units = 120, activation= 'relu', input_shape=(4,)))
+model1.add(tf.keras.layers.Dense(units = 120, activation= 'relu'))
+model1.add(tf.keras.layers.Dense(units = 120, activation= 'relu'))
+model1.add(tf.keras.layers.Dense(units = 120, activation= 'relu'))
+model1.add(tf.keras.layers.Dense(units=3, activation='softmax'))
+
+model1.compile(optimizer = 'sgd', loss = 'categorical_crossentropy', metrics = ['accuracy'])
+
+model1.fit(X_train, y_train, validation_data=(X_test, y_test), epochs = 10000, callbacks = [MyCLRuleMonitor(0.9)])
+
