@@ -111,9 +111,6 @@ model.compile(optimizer = 'adam', loss= 'categorical_crossentropy', metrics = ['
 
 ohe = tf.keras.utils.to_categorical(s_labels)
 
-print(ohe)
-
-
 from sklearn.model_selection import train_test_split
 X_train,X_test,y_train,y_test = train_test_split(features,
                                                  ohe,
@@ -132,3 +129,20 @@ model1.compile(optimizer = 'sgd', loss = 'categorical_crossentropy', metrics = [
 
 model1.fit(X_train, y_train, validation_data=(X_test, y_test), epochs = 10000, callbacks = [MyCLRuleMonitor(0.9)])
 
+# Test 1 : Epoch 16/10000
+# 4/4 ━━━━━━━━━━━━━━━━━━━━ 0s 51ms/step - accuracy: 0.7417 - loss: 0.5122 - val_accuracy: 0.9333 - val_loss: 0.5247
+
+# Inputs:
+separ_l = float(input('Enter sepal length: '))
+separ_w = float(input('Enter sepal width: '))
+petal_l = float(input('Enter petal length: '))
+petal_w = float(input('Enter petal width: '))
+
+
+input = np.array([[separ_l, separ_w, petal_l, petal_w]])
+print(input)
+# transform input
+
+print(le.classes_[np.argmax(model.predict(input))])
+
+# Setosa
