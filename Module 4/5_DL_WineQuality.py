@@ -60,3 +60,19 @@ print(np.unique(labels))
 
 X_train, X_test, y_train, y_test = train_test_split(en_features, ohe, test_size=0.2, random_state=102)
 
+'Deep learning model steps:'
+'1. Model architecting'
+'2. Model compile'
+'3. Model training'
+'4. Model evaluation'
+'5. Model input'
+
+model = tf.keras.Sequential()
+
+model.add(tf.keras.layers.Dense(units= 100, activation= 'sigmoid', input_shape=(12,)))
+model.add(tf.keras.layers.Dense(units= 100, activation='sigmoid'))
+model.add(tf.keras.layers.Dense(units= 100, activation='sigmoid'))
+model.add(tf.keras.layers.Dense(units= 100, activation='sigmoid'))
+model.add(tf.keras.layers.Dense(units= 6, activation='softmax'))
+
+
