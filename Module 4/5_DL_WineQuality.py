@@ -136,6 +136,7 @@ model1.add(tf.keras.layers.Dense(units=6, activation="softmax"))
 
 
 model1.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+model1.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.02), loss="sparse_categorical_crossentropy", metrics=["accuracy"])
 
 # model1.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = 100000, callbacks= [MyCLRuleMonitor(0.8)])
 
