@@ -139,10 +139,12 @@ petal_l = float(input('Enter petal length: '))
 petal_w = float(input('Enter petal width: '))
 
 
-input = np.array([[separ_l, separ_w, petal_l, petal_w]])
-print(input)
-# transform input
+print(le.classes_[np.argmax(model.predict(np.array([[separ_l, separ_w, petal_l, petal_w]])))])
 
-print(le.classes_[np.argmax(model.predict(input))])
+# input = np.array([[separ_l, separ_w, petal_l, petal_w]])
+# print(input)
+# # transform input
+
+# print(le.classes_[np.argmax(model.predict(np.array([[1,2,3,4]])))])
 
 # Setosa
