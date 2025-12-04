@@ -105,9 +105,38 @@ model.compile(optimizer = 'adam', loss='categorical_crossentropy', metrics=['acc
 # Epoch 11456/100000
 # Let's try with the Discrete numbers
 
-labels = data.iloc[:,[11]].values
+features = data.iloc[:,[0,1,2,3,4,5,6,7,8,9,10]].values
+#Feature Scaling
+sc = StandardScaler()
+features = sc.fit_transform(features)
 
-le = LabelEncoder(labels)
-encoded_labels = le.fit_transform(labels)
+label = data.iloc[:,[11]].values
 
-print(labels)
+le = LabelEncoder()
+label = le.fit_transform(label)
+
+
+X_train,X_test,y_train,y_test = train_test_split(features,
+                                                 label,
+                                                 test_size=0.2,
+                                                 random_state=10)
+'Deep learning model steps:'
+'1. Model architecting'
+'2. Model compile'
+'3. Model training'
+'4. Model evaluation'
+'5. Model input'
+
+
+model1 = tf.keras.Sequential()
+model1.add(tf.keras.layers.Dense(units=122, activation="relu", input_shape=(11,)))
+model1.add(tf.keras.layers.Dense(units=122, activation="relu"))
+model1.add(tf.keras.layers.Dense(units=122, activation="relu"))
+model1.add(tf.keras.layers.Dense(units=6, activation="softmax"))
+
+
+model1.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+
+# model1.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = 100000, callbacks= [MyCLRuleMonitor(0.8)])
+
+model1.fit(X_train,y_train, validation_data=(X_test,y_test), epochs=100000, callbacks = [MyCLRuleMonitor(0.65)])
