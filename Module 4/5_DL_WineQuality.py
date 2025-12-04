@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import StandardScaler, RobustScaler
+from sklearn.preprocessing import StandardScaler, RobustScaler, LabelEncoder
+from scipy.stats import shapiro
+import tensorflow as tf
 
 data = pd.read_csv('winequality-red.csv')
 
@@ -22,8 +24,8 @@ data.dropna(inplace=True)
 features = data.iloc[:,0:10].values
 labels = data.iloc[:, 11].values
 
-print(features)
-print(labels)
+# print(features)
+# print(labels)
 
 ' Rules for deep learning models:'
 '1. Data must be strictly numerical'
@@ -34,5 +36,17 @@ print(labels)
 '           Multiclass classification ---> Dummy variables or Discrete numeric'
 
 
-def check_normality(col):
-    
+sc = StandardScaler()
+en_features = sc.fit_transform(features)
+
+
+#Label's Rule for Classification
+# Discrete labels must ordered whole number
+# e.g. if your original label is [5,6,2,3], this should be transformed to ordered whole number which is achieved using LabelEncoder class.
+
+# #Label Encoding ---> Converting label from categorical to discrete
+le = LabelEncoder()
+en_labels = le.fit_transform(labels)
+print(en_labels)
+
+#Convert discrete label to dummy values
