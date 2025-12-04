@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler, RobustScaler, LabelEncoder
 from scipy.stats import shapiro
+from sklearn.model_selection import train_test_split
 import tensorflow as tf
 
 data = pd.read_csv('winequality-red.csv')
@@ -47,6 +48,15 @@ en_features = sc.fit_transform(features)
 # #Label Encoding ---> Converting label from categorical to discrete
 le = LabelEncoder()
 en_labels = le.fit_transform(labels)
-print(en_labels)
+# print(en_labels)
 
 #Convert discrete label to dummy values
+ohe = tf.keras.utils.to_categorical(en_labels)
+print(ohe)
+
+print(np.unique(labels))
+
+
+
+X_train, X_test, y_train, y_test = train_test_split(en_features, ohe, test_size=0.2, random_state=102)
+
