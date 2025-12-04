@@ -5,6 +5,21 @@ from scipy.stats import shapiro
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
 
+
+class MyCLRuleMonitor(tf.keras.callbacks.Callback):
+  def __init__(self,CL):
+    super(MyCLRuleMonitor,self).__init__()
+    self.CL = CL
+
+
+  def on_epoch_end(self,epoch,logs=None):
+    testScore = logs['val_accuracy']
+    trainScore = logs['accuracy']
+
+    if testScore > trainScore and testScore >= self.CL:
+      self.model.stop_training = True
+
+
 data = pd.read_csv('winequality-red.csv')
 
 # print(data.info())
@@ -22,8 +37,8 @@ print(data.isna().sum()) # No null values
 data.dropna(inplace=True)
 
 # saperate label and feature cols:
-features = data.iloc[:,0:10].values
-labels = data.iloc[:, 11].values
+features = data.iloc[:,[0,1,2,3,4,5,6,7,8,9,10]].values
+labels = data.iloc[:, [11]].values
 
 # print(features)
 # print(labels)
@@ -69,10 +84,14 @@ X_train, X_test, y_train, y_test = train_test_split(en_features, ohe, test_size=
 
 model = tf.keras.Sequential()
 
-model.add(tf.keras.layers.Dense(units= 100, activation= 'sigmoid', input_shape=(12,)))
-model.add(tf.keras.layers.Dense(units= 100, activation='sigmoid'))
-model.add(tf.keras.layers.Dense(units= 100, activation='sigmoid'))
-model.add(tf.keras.layers.Dense(units= 100, activation='sigmoid'))
+model.add(tf.keras.layers.Dense(units= 100, activation= 'relu', input_shape=(11,)))
+model.add(tf.keras.layers.Dense(units= 100, activation='relu'))
+model.add(tf.keras.layers.Dense(units= 100, activation='relu'))
+model.add(tf.keras.layers.Dense(units= 100, activation='relu'))
 model.add(tf.keras.layers.Dense(units= 6, activation='softmax'))
 
+model.compile(optimizer = 'sgd', loss='categorical_crossentropy', metrics=['accuracy'])
 
+model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = 100000, callbacks= [MyCLRuleMonitor(0.8)])
+
+# test 1: with sigmoid the val_accuracy is not coming good.
