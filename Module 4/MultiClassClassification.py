@@ -63,7 +63,7 @@ for col in cols:
 3. Features and Labels must be in form of 2d array.
 4. Data needs to be Scaled: Features (Optional,  but good to do) / Labels: Mandatory
     i. Binary-classification: labels must be represented in form of 0 or 1.
-    ii. Multiclass-classification: lebels must be discrete numerical or Dymmy Variables '''
+    ii. Multiclass-classification: labels must be discrete numerical or Dymmy Variables '''
 
 # Labels must be Numeric : Using LabelEncoder
 le = LabelEncoder()
