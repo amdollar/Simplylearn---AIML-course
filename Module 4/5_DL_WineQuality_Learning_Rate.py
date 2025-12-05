@@ -92,19 +92,6 @@ model.add(tf.keras.layers.Dense(units= 6, activation='softmax'))
 
 model.compile(optimizer = 'adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-# model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = 100000, callbacks= [MyCLRuleMonitor(0.8)])
-
-# test 1: with sigmoid the val_accuracy is not coming good.
-# Test 2: with relu 
-# 40/40 ━━━━━━━━━━━━━━━━━━━━ 0s 5ms/step - accuracy: 0.7506 - loss: 0.6439 - val_accuracy: 0.6062 - val_loss: 1.1414
-# Epoch 7029/100000
-
-# Not giving a Generalized model with the Hot encoding (Dymmy variables)
-# Epoch 11455/100000
-# 40/40 ━━━━━━━━━━━━━━━━━━━━ 0s 9ms/step - accuracy: 0.9421 - loss: 0.1618 - val_accuracy: 0.6000 - val_loss: 3.6401
-# Epoch 11456/100000
-# Let's try with the Discrete numbers
-
 features = data.iloc[:,[0,1,2,3,4,5,6,7,8,9,10]].values
 #Feature Scaling
 sc = StandardScaler()
@@ -135,16 +122,9 @@ model1.add(tf.keras.layers.Dense(units=122, activation="relu"))
 model1.add(tf.keras.layers.Dense(units=6, activation="softmax"))
 
 
-model1.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
-model1.compile(optimizer= tf.keras.optimizers.RMSprop(momentum= 0.2), loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+# model1.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+model1.compile(optimizer= tf.keras.optimizers.Adam(learning_rate= 0.2), loss="sparse_categorical_crossentropy", metrics=["accuracy"])
 
 # model1.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = 100000, callbacks= [MyCLRuleMonitor(0.8)])
 
 model1.fit(X_train,y_train, validation_data=(X_test,y_test), epochs=100000, callbacks = [MyCLRuleMonitor(0.65)])
-
-# No improvements:
-# 000
-# 40/40 ━━━━━━━━━━━━━━━━━━━━ 0s 8ms/step - accuracy: 1.0000 - loss: 2.1894e-07 - val_accuracy: 0.6250 - val_loss: 8.3715
-# Epoch 1661/100000
-# 40/40 ━━━━━━━━━━━━━━━━━━━━ 1s 8ms/step - accuracy: 1.0000 - loss: 2.1857e-07 - val_accuracy: 0.6250 - val_loss: 8.3717
-# Epoch 1662/100000
