@@ -68,14 +68,14 @@ en_labels = le.fit_transform(labels)
 # print(en_labels)
 
 #Convert discrete label to dummy values
-ohe = tf.keras.utils.to_categorical(en_labels)
-print(ohe)
+# ohe = tf.keras.utils.to_categorical(en_labels)
+# print(ohe)
 
 print(np.unique(labels))
 
 
 
-X_train, X_test, y_train, y_test = train_test_split(en_features, ohe, test_size=0.2, random_state=102)
+X_train, X_test, y_train, y_test = train_test_split(en_features, en_labels, test_size=0.2, random_state=102)
 
 'Deep learning model steps:'
 '1. Model architecting'
@@ -86,47 +86,52 @@ X_train, X_test, y_train, y_test = train_test_split(en_features, ohe, test_size=
 
 model = tf.keras.Sequential()
 
-model.add(tf.keras.layers.Dense(units= 100, activation= 'relu', input_shape=(11,)))
-model.add(tf.keras.layers.Dense(units= 100, activation='relu'))
-model.add(tf.keras.layers.Dense(units= 100, activation='relu'))
-model.add(tf.keras.layers.Dense(units= 100, activation='relu'))
-model.add(tf.keras.layers.Dense(units= 6, activation='softmax'))
 
-model.compile(optimizer = 'adam', loss='categorical_crossentropy', metrics=['accuracy'])
+model.add(tf.keras.layers.Dense(units= 100, activation='relu', input_shape= (11,)))
+model.add(tf.keras.layers.Dropout(0.5))
+model.add(tf.keras.layers.Dense(units=100, activation='relu'))
+model.add(tf.keras.layers.Dropout(0.5))
+model.add(tf.keras.layers.Dense(units = 100, activation= 'relu'))
+model.add(tf.keras.layers.Dropout(0.4))
+model.add(tf.keras.layers.Dense(units= 1, activation='linear'))
 
-features = data.iloc[:,[0,1,2,3,4,5,6,7,8,9,10]].values
-#Feature Scaling
-sc = StandardScaler()
-features = sc.fit_transform(features)
-
-label = data.iloc[:,[11]].values
-
-le = LabelEncoder()
-label = le.fit_transform(label)
+model.compile(optimizer=tf.keras.optimizers.RMSprop(momentum=0.2), loss='categorical_crossentropy', metrics=['accuracy'])
+model.fit(X_train, y_train, validation_data = (X_test, y_test), epochs= 10000, callbacks= [MyCLRuleMonitor(0.65)])
 
 
-X_train,X_test,y_train,y_test = train_test_split(features,
-                                                 label,
-                                                 test_size=0.2,
-                                                 random_state=10)
-'Deep learning model steps:'
-'1. Model architecting'
-'2. Model compile'
-'3. Model training'
-'4. Model evaluation'
-'5. Model input'
+# features = data.iloc[:,[0,1,2,3,4,5,6,7,8,9,10]].values
+# #Feature Scaling
+# sc = StandardScaler()
+# features = sc.fit_transform(features)
+
+# label = data.iloc[:,[11]].values
+
+# le = LabelEncoder()
+# label = le.fit_transform(label)
 
 
-model1 = tf.keras.Sequential()
-model1.add(tf.keras.layers.Dense(units=122, activation="relu", input_shape=(11,)))
-model1.add(tf.keras.layers.Dense(units=122, activation="relu"))
-model1.add(tf.keras.layers.Dense(units=122, activation="relu"))
-model1.add(tf.keras.layers.Dense(units=6, activation="softmax"))
+# X_train,X_test,y_train,y_test = train_test_split(features,
+#                                                  label,
+#                                                  test_size=0.2,
+#                                                  random_state=10)
+# 'Deep learning model steps:'
+# '1. Model architecting'
+# '2. Model compile'
+# '3. Model training'
+# '4. Model evaluation'
+# '5. Model input'
 
 
-# model1.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
-model1.compile(optimizer= tf.keras.optimizers.Adam(learning_rate= 0.2), loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+# model1 = tf.keras.Sequential()
+# model1.add(tf.keras.layers.Dense(units=122, activation="relu", input_shape=(11,)))
+# model1.add(tf.keras.layers.Dense(units=122, activation="relu"))
+# model1.add(tf.keras.layers.Dense(units=122, activation="relu"))
+# model1.add(tf.keras.layers.Dense(units=6, activation="softmax"))
 
-# model1.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = 100000, callbacks= [MyCLRuleMonitor(0.8)])
 
-model1.fit(X_train,y_train, validation_data=(X_test,y_test), epochs=100000, callbacks = [MyCLRuleMonitor(0.65)])
+# # model1.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+# model1.compile(optimizer= tf.keras.optimizers.Adam(learning_rate= 0.2), loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+
+# # model1.fit(X_train, y_train, validation_data = (X_test, y_test), epochs = 100000, callbacks= [MyCLRuleMonitor(0.8)])
+
+# model1.fit(X_train,y_train, validation_data=(X_test,y_test), epochs=100000, callbacks = [MyCLRuleMonitor(0.65)])
