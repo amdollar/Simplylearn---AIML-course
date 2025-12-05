@@ -1,3 +1,5 @@
+'''Trying the regularization technique : Drop Out'''
+
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler, RobustScaler, LabelEncoder
