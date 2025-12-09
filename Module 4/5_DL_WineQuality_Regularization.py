@@ -88,7 +88,7 @@ model = tf.keras.Sequential()
 
 
 model.add(tf.keras.layers.Dense(units= 100, activation='relu', input_shape= (11,)))
-model.add(tf.keras.layers.Dropout(0.5))
+model.add(tf.keras.layers.Dropout(0.3))
 model.add(tf.keras.layers.Dense(units=100, activation='relu'))
 model.add(tf.keras.layers.Dropout(0.5))
 model.add(tf.keras.layers.Dense(units = 100, activation= 'relu'))
