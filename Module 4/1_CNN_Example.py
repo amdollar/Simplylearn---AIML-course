@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import shutil
 import os
+import matplotlib.pyplot as plt
 
 import tensorflow as tf
 
@@ -103,7 +104,25 @@ model.compile(optimizer = 'adam',loss= 'binary_crossentropy', metrics =['accurac
 # validation_steps ===== applicable for testing data 
 model.fit(trainImageData, 
           validation_data = testImageData, 
-          epochs = 200, 
+          epochs = 2, 
           steps_per_epoch = (len(trainImageData.filenames)//trainImageData.batch_size ),
           validation_steps= (len(testImageData.filenames)//testImageData.batch_size),
           callbacks= [MyCLRuleMonitor(0.7)])
+
+
+
+# Deploy:
+# Read the image:
+img = tf.keras.preprocessing.image.load_img('cats_and_dogs/cats_and_dogs/train/cats/cat.1.jpg', target_size=(64,64))
+
+plt.imshow(img)
+plt.show()
+
+# Change image to the array:
+imgArray = tf.keras.preprocessing.image.img_to_array(img)
+print(imgArray.shape)
+# (64, 64, 3) : (x, y, channel)
+# the image count is missing here, adding:
+
+compatibleArray = np.expand_dims(imgArray, axis=0)
+compatibleArray.shape
