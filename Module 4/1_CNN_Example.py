@@ -65,5 +65,12 @@ model.add(tf.keras.layers.MaxPooling2D(pool_size= (2,2)))
 # Flatten:
 model.add(tf.keras.layers.Flatten())
 
+# FC layer: Fully Connected Layer | ANN:
+model.add(tf.keras.layers.Dense(units = 512, activation='relu'))
+model.add(tf.keras.layers.Dense(units = 128, activation='relu'))
+model.add(tf.keras.layers.Dense(units = 256, activation='relu'))
+
+# if class mode binary-- sigmoid | if class mode categorical -- softmax
+model.add(tf.keras.layers.Dense(units = 1, activation='sigmoid'))
 
 
