@@ -40,3 +40,25 @@ testImageData = test_generator.flow_from_directory('cats_and_dogs/cats_and_dogs/
                                                    target_size = (64,64))
 
 print(trainImageData.image_shape)
+
+# Architect the NN:
+
+# Creating the model:
+
+model = tf.keras.Sequential()
+
+# We will use two convolutional layers here:
+# Convolutional layer = convolve + pooling (Optional)
+
+# 1st convolutional layer:
+        # Convolve:
+model.add(tf.keras.layers.Conv2D(32, (3,3), activation='relu', input_shape = trainImageData.image_shape, padding= 'same'))
+        # Padding
+model.add(tf.keras.layers.MaxPooling2D(pool_size=(2,2)))
+
+# 2nd Convolutional layer:
+        # Convolve:
+model.add(tf.keras.layers.Conv2D(16, (3,3), activation='relu', padding='same'))
+        # Padding
+model.add(tf.keras.layers.MaxPooling2D(pool_size= (2,2)))
+
