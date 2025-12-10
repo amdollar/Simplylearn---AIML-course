@@ -6,6 +6,19 @@ import os
 
 import tensorflow as tf
 
+
+class MyCLRuleMonitor(tf.keras.callbacks.Callback):
+  def __init__(self, CL):
+    super(MyCLRuleMonitor).__init__()
+    self.CL = CL
+
+  def on_epoch_end(self, epoch, logs=None):
+    trainScore = logs["accuracy"]
+    testScore = logs["val_accuracy"]
+
+    if testScore > trainScore and testScore >= self.CL:
+      self.model.stop_training = True
+
 # Extract the Zip File ---- Step required in colab if zip file uploaded
 zip_file_path = 'cats_and_dogs.zip'
 extract_dir = 'cats_and_dogs'
@@ -22,6 +35,12 @@ except Exception as e:
 
 # Preprocessing --- Goal is to make the data compatible for CNN
 # Tensorflow by default offers direct class to achieve preprocessing
+
+'Steps for model creation:'
+'1. Model architecting'
+'2. Model compile'
+'3. Model training'
+'4. Prediction / Output'
 
 # ImageGenerators
 train_generator = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1.0/255.0)
@@ -73,4 +92,8 @@ model.add(tf.keras.layers.Dense(units = 256, activation='relu'))
 # if class mode binary-- sigmoid | if class mode categorical -- softmax
 model.add(tf.keras.layers.Dense(units = 1, activation='sigmoid'))
 
+print(model.summary())
 
+# Compile the model:
+
+model.compile(optimizer = 'adam',loss= 'binary_crossentropy', metrics =['accuracy'])
