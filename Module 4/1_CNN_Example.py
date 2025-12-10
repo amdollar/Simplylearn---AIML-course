@@ -113,7 +113,7 @@ model.fit(trainImageData,
 
 # Deploy:
 # Read the image:
-img = tf.keras.preprocessing.image.load_img('cats_and_dogs/cats_and_dogs/train/cats/cat.1.jpg', target_size=(64,64))
+img = tf.keras.preprocessing.image.load_img('cats_and_dogs/cats_and_dogs/validation/cats/tiger_wild_cat.jpg', target_size=(64,64))
 
 plt.imshow(img)
 plt.show()
@@ -125,4 +125,22 @@ print(imgArray.shape)
 # the image count is missing here, adding:
 
 compatibleArray = np.expand_dims(imgArray, axis=0)
-compatibleArray.shape
+print(compatibleArray.shape)
+
+
+
+# 1. Get the raw predictions from the model
+predictions = model.predict(compatibleArray)
+
+# 2. Find the index of the class with the highest probability
+predicted_class_index = np.argmax(predictions) #
+
+# 3. Create a reverse mapping dictionary to get the class name from the index
+# Original: {'class_name': index} -> Reversed: {index: 'class_name'}
+class_names_map = {v: k for k, v in trainImageData.class_indices.items()}
+
+# 4. Use the index to look up the actual class name
+predicted_class_name = class_names_map[predicted_class_index]
+
+# 5. Print the result
+print(f"The predicted pet name is: {predicted_class_name}") #
