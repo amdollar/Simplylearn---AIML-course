@@ -1,0 +1,1 @@
+# Goal: Create a model that can accept image as input and classify image as cat and dog
