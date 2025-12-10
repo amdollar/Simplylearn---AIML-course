@@ -1,1 +1,42 @@
-# Goal: Create a model that can accept image as input and classify image as cat and dog
+
+import pandas as pd
+import numpy as np
+import shutil
+import os
+
+import tensorflow as tf
+
+# Extract the Zip File ---- Step required in colab if zip file uploaded
+zip_file_path = 'cats_and_dogs.zip'
+extract_dir = 'cats_and_dogs'
+
+# Create the directory if it doesn't exist
+os.makedirs(extract_dir, exist_ok=True)
+
+# Unpack the archive using Python's standard library
+try:
+    shutil.unpack_archive(zip_file_path, extract_dir)
+    print(f"Successfully unpacked {zip_file_path} to {extract_dir}")
+except Exception as e:
+    print(f"An error occurred: {e}")
+
+# Preprocessing --- Goal is to make the data compatible for CNN
+# Tensorflow by default offers direct class to achieve preprocessing
+
+# ImageGenerators
+train_generator = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1.0/255.0)
+test_generator = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1.0/255.0)
+
+# Pass my image:
+
+trainImageData = train_generator.flow_from_directory('cats_and_dogs/cats_and_dogs/train', # Path to training data
+                                                     batch_size = 20,       # How many images to pass per tick
+                                                     class_mode = 'binary', # binary -- Binary Classification | categorical -- Multiclass classification
+                                                     target_size = (64,64)) # 
+
+testImageData = test_generator.flow_from_directory('cats_and_dogs/cats_and_dogs/validation',
+                                                   batch_size = 20,
+                                                   class_mode = 'binary',
+                                                   target_size = (64,64))
+
+print(trainImageData.image_shape)
