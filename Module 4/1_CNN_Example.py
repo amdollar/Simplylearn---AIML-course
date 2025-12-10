@@ -62,3 +62,8 @@ model.add(tf.keras.layers.Conv2D(16, (3,3), activation='relu', padding='same'))
         # Padding
 model.add(tf.keras.layers.MaxPooling2D(pool_size= (2,2)))
 
+# Flatten:
+model.add(tf.keras.layers.Flatten())
+
+
+
