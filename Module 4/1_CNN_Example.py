@@ -104,7 +104,7 @@ model.compile(optimizer = 'adam',loss= 'binary_crossentropy', metrics =['accurac
 # validation_steps ===== applicable for testing data 
 model.fit(trainImageData, 
           validation_data = testImageData, 
-          epochs = 2, 
+          epochs = 200, 
           steps_per_epoch = (len(trainImageData.filenames)//trainImageData.batch_size ),
           validation_steps= (len(testImageData.filenames)//testImageData.batch_size),
           callbacks= [MyCLRuleMonitor(0.7)])
