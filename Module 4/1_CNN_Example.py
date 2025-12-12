@@ -104,7 +104,7 @@ model.compile(optimizer = 'adam',loss= 'binary_crossentropy', metrics =['accurac
 # validation_steps ===== applicable for testing data 
 model.fit(trainImageData, 
           validation_data = testImageData, 
-          epochs = 200, 
+          epochs = 1, 
           steps_per_epoch = (len(trainImageData.filenames)//trainImageData.batch_size ),
           validation_steps= (len(testImageData.filenames)//testImageData.batch_size),
           callbacks= [MyCLRuleMonitor(0.7)])
@@ -134,6 +134,7 @@ predictions = model.predict(compatibleArray)
 
 # 2. Find the index of the class with the highest probability
 predicted_class_index = np.argmax(predictions) #
+print(trainImageData.classes)
 
 # 3. Create a reverse mapping dictionary to get the class name from the index
 # Original: {'class_name': index} -> Reversed: {index: 'class_name'}
