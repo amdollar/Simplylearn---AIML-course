@@ -22,7 +22,8 @@ print(data.head())
 #Goal: Check if rdSpend and Profit has any linear relationship
 #      Check if rdSpend has any impact on profitability of the company.
 
-# Check via visual EDA:
+
+# Check via visual EDA using plt:
 sns.scatterplot(data=data, x='R&D Spend', y= 'Profit')
 # plt.show()
 # Visually Ican see data is looking as linearly related.
