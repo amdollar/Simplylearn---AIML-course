@@ -1,0 +1,97 @@
+======== Prompt Practicing============
+1.
+Act as a nutritionist and create a weekly meal plan for one of my client, The diet in the charts should follow following three preferences: Vegetarian, Low in Carbs, High Protein. Also, consider limiting the artificial sugar.
+
+Critique:
+✅ What Works Well
+Clear role assignment: “Act as a nutritionist” sets the right expertise.
+Diet preferences are explicit: Vegetarian, Low Carb, High Protein.
+Health constraint included: Limiting artificial sugar is a good, specific guideline.
+Simple and easy to understand: No ambiguity in intent.
+
+⚠️ What Can Be Improved
+Grammar & flow
+“one of my client” → should be “one of my clients”
+Long sentence could be broken for clarity.
+Lack of output structure
+It doesn’t specify how the meal plan should be presented (table, bullets, daily split).
+Missing personalization details
+No info about age, goal (fat loss, muscle gain), region, allergies, or calorie target.
+Time & portion clarity
+Doesn’t specify number of meals per day or portion guidance.
+
+Improved:
+Act as a nutritionist and create a weekly meal plan for one of my clients. Following are the details of this client: Body weight: 70 KG, Height: 5 ft 10 Inc Goal: Fat loss muscle gain The diet in the charts should follow following three preferences: Vegetarian, Low in Carbs, High Protein. Also, consider limiting the artificial sugar. Give the meal plans in a Table format. Include the Nutrition details as well.
+
+
+2️⃣ Prompt Engineering Framework
+
+Subject: Old age people health care Task: Write me a blog post that explains the practices to be followed by old age/ adult audience to stay healthy. Include some physical activities as well as diet plans Instructions: This blog post should be in between 600 to 700 words, the tone should be encouraging, easy to follow, a time table of activities that can be added would be a great to have. Context: Imagine you are writing this to target audience who wants their parents to be healthy.
+
+3️⃣ Output Template Design
+I want to learn about top 3 LLM Models that exists, Would be better if you provide me following details: LLM Names: Best use cases: Usage difficulty (High/Medium/Low): Recommended learning resources or codebases: Explain this topic to me as you are explaining to a 4th grader. Give me a table of comparison as well in the end.
+
+
+4️⃣ Step-by-Step Technique
+I am new to the moto-vlogging, and want to create content and expand my reach on social media platforms, Now act as an Instagram specialist and tell me the step by step guide to archive this. Note that when you explain this to me, give me very precise steps, and timelines of my actions when should I perform.
+
+Optimized Prompt (Professional Grade)
+
+“I am a beginner moto-vlogger and want to grow my presence and reach on Instagram.
+Act as an experienced Instagram growth specialist for content creators and provide a clear, step-by-step action plan.
+The plan should include precise daily and weekly actions, realistic timelines (e.g., a 30-day roadmap), and best practices for content creation, posting, and engagement.
+Assume I am starting from scratch and explain everything in a simple, practical way.
+Present the steps in a structured format (phases or tables) so they are easy to follow.”
+
+
+5️⃣ Perspectives Technique
+Present a balanced discussion on the use of AI surveillance systems by outlining arguments for and against them from the perspectives of the following stakeholders:
+
+1. A government official concerned with public safety and national security
+2. A civil rights activist focused on privacy, individual freedoms, and ethical implications
+3. A business owner evaluating operational efficiency, customer trust, and legal risks
+
+For each perspective, clearly separate the supporting arguments and opposing arguments, explain the reasoning behind each position, and keep the tone neutral and analytical.
+
+6️⃣ 4th Grader Technique
+I am a 4th grader, and want to understand how the stock market works. Act as a stock market analyst and explain me things : What is stock, Why it moves low and high And details that needs to be known to me. Provide me a clear and concise output with examples
+
+✨ Optimized Prompt (High-Quality Version)
+**“I am a 4th-grade student and want to understand how the stock market works.
+Act as a friendly stock market expert and explain the basics in very simple language.
+Cover the following topics:
+What a stock is
+Why stock prices go up and down
+A few important things a beginner should know
+Use short sentences, real-life examples, and simple comparisons.
+Avoid difficult words and keep the explanation clear, fun, and easy to understand.”**
+
+7️⃣ Tabular Format
+I want to start workout but not sure about the exercise that I need to perform as part of my weight loss- muscle gain journey. 
+Act as a Professional Gym trainer and give me set of exercises to be performed in the gym to archive my above goal.
+Provide me these in a tabular format that should include:
+Day
+Exercise
+Set and Reps
+Targeted muscle group
+Intensity level
+
+8️⃣ Critique Me
+Write a prompt asking ChatGPT to critique your LinkedIn profile summary and suggest how to make it more compelling for recruiters.
+
+Can you critique the following prompts and give me the improvements that needs to be performed:
+I want to start workout but not sure about the exercise that I need to perform as part of my weight loss- muscle gain journey. Act as a Professional Gym trainer and give me set of exercises to be performed in the gym to archive my above goal. Provide me these in a tabular format that should include: Day Exercise Set and Reps Targeted muscle group Intensity level
+
+9️⃣ Act as a Specialist
+Write a prompt asking ChatGPT to act as an Instagram Reels strategist for a fashion influencer who wants to boost views and engagement.
+
+Act as an experienced Instagram Reels strategist specializing in fashion influencers.
+I am a fashion content creator aiming to increase Reel views, saves, shares, and overall engagement.
+Create a step-by-step strategy covering content ideas, posting frequency, hook techniques, trending audio usage, caption structure, hashtag strategy, and engagement tactics.
+Assume I want practical, actionable advice with examples, timelines, and performance metrics to track growth
+
+
+
+
+Feed back:
+Role-> Context -> Output format in case of role based prompts.
