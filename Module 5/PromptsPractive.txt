@@ -27,6 +27,46 @@ Act as a nutritionist and create a weekly meal plan for one of my clients. Follo
 2️⃣ Prompt Engineering Framework
 
 Subject: Old age people health care Task: Write me a blog post that explains the practices to be followed by old age/ adult audience to stay healthy. Include some physical activities as well as diet plans Instructions: This blog post should be in between 600 to 700 words, the tone should be encouraging, easy to follow, a time table of activities that can be added would be a great to have. Context: Imagine you are writing this to target audience who wants their parents to be healthy.
+🔍 Prompt Critique
+✅ What the Prompt Does Well
+
+Clear topic
+The subject (“Old age people health care”) makes the theme obvious.
+Defined task
+You clearly ask for a blog post explaining healthy practices.
+Audience context
+Targeting people who want their parents to be healthy is strong and helpful.
+Constraints included
+Word count (600–700 words)
+Tone (encouraging, easy to follow)
+Specific content elements (physical activities, diet plans, timetable)
+⚠️ Areas That Need Improvement
+1. Grammar & phrasing
+“Old age people health care” → awkward phrasing
+✔ Better: “Elderly Health Care” or “Healthy Aging Practices”
+“old age/ adult audience” is unclear and overlapping.
+Long sentences without punctuation reduce clarity.
+2. Structure clarity
+Subject, Task, Instructions, and Context are all written in one block.
+Separating them cleanly improves readability and AI understanding.
+3. Output format not specified
+You mention a timetable but don’t explicitly request a table format.
+No guidance on headings, sections, or layout.
+4. Scope of “diet plans” is vague
+Is it a full weekly plan, daily sample, or general guidelines?
+5. Tone control could be stronger
+Encouraging is good, but adding words like empathetic, non-preachy, or practical improves results.
+✨ Improved & Optimized Prompt (Professional Quality)
+Subject: Healthy Aging & Elderly Health Care
+Task: Write a 600–700 word blog post explaining simple, practical health practices for elderly people to stay physically and mentally healthy.
+Audience: Adult readers who want their aging parents to live a healthy, active, and independent life.
+Instructions:
+Use an encouraging, empathetic, and easy-to-follow tone
+Include age-appropriate physical activities
+Provide basic diet guidelines with a sample daily meal plan
+Add a simple daily activity timetable (preferably in table format)
+Keep the advice practical, safe, and non-medical
+Context: The content should reassure readers and focus on small, sustainable daily habits rather than strict routines.
 
 3️⃣ Output Template Design
 I want to learn about top 3 LLM Models that exists, Would be better if you provide me following details: LLM Names: Best use cases: Usage difficulty (High/Medium/Low): Recommended learning resources or codebases: Explain this topic to me as you are explaining to a 4th grader. Give me a table of comparison as well in the end.
