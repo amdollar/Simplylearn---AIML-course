@@ -62,7 +62,7 @@ en_features = sc.fit_transform(features)
 
 # #Label Encoding ---> Converting label from categorical to discrete
 le = LabelEncoder()
-en_labels = le.fit_transform(labels)
+en_labels = le.fit_transform(labels.flatten())
 # print(en_labels)
 
 #Convert discrete label to dummy values
@@ -113,7 +113,7 @@ features = sc.fit_transform(features)
 label = data.iloc[:,[11]].values
 
 le = LabelEncoder()
-label = le.fit_transform(label)
+label = le.fit_transform(label.flatten())
 
 
 X_train,X_test,y_train,y_test = train_test_split(features,
