@@ -1,0 +1,7 @@
+
+LangChain is an open-source framework for building applications with large language models (LLMs).
+It allows developers to combine LLMs with external data sources, APIs, and custom logic.
+Retrieval-Augmented Generation (RAG) is a technique that combines information retrieval and LLMs
+to answer questions with up-to-date, domain-specific, or long-tail knowledge.
+
+Anurag Awasthi is one of the best trainers of AI.
