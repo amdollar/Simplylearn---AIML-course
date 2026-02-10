@@ -1,0 +1,13 @@
+Sample Electronic Medical Record (EMR)
+
+Patient Name: John Doe
+Age: 54
+Diagnosis: Type 2 Diabetes Mellitus
+Medications: Metformin 500mg twice daily, Insulin Glargine 10U at bedtime
+Recent Labs: HbA1c: 8.2% (elevated), Fasting glucose: 162 mg/dL
+Allergies: None reported
+
+Last Visit Notes:
+Patient reports occasional dizziness. Advised to monitor blood sugar levels more closely, increase exercise, and maintain dietary logs.
+
+Next follow-up: 3 months.

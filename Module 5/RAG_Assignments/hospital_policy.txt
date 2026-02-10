@@ -1,0 +1,9 @@
+Hospital Discharge Policy
+
+All inpatients must be reviewed daily by their primary physician. Patients are considered for discharge when their primary medical condition is stable, they no longer require inpatient-level care, and a safe plan is in place for post-discharge management.
+
+For ICU patients, a multidisciplinary team must review readiness for discharge. The discharge summary must include diagnoses, procedures, key events, and pending results.
+
+Discharge time for general wards is 12:00 noon. Discharge from the ICU is coordinated with the receiving ward. Patients with outstanding investigations may be discharged if clinically appropriate, with follow-up arranged.
+
+Any patient wishing to leave against medical advice must sign a formal consent form. For questions about discharge, please contact the ward administrator.
